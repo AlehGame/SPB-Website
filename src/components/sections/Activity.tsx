@@ -96,26 +96,27 @@ export function Activity() {
 
   return (
     <section ref={sectionRef} id="audience" className="relative h-svh w-full overflow-hidden bg-black">
-      <div className="relative mx-auto h-full max-w-[1920px]">
-        {/* Слои: фото 1 внизу, фото 2 и 3 открываются поверх радиальной маской */}
-        <div className="absolute inset-0">
-          <img src={image1} alt="" className="size-full object-cover" />
+      {/* Фон секции на всю ширину экрана: фото 1 внизу, фото 2 и 3 открываются поверх радиальной маской */}
+      <div className="absolute inset-0">
+        <img src={image1} alt="" className="size-full object-cover" />
+        {overlay}
+      </div>
+      {[image2, image3].map((src, i) => (
+        <div
+          key={src}
+          ref={(el) => {
+            maskRefs.current[i] = el
+          }}
+          className="absolute inset-0"
+          style={maskStyle}
+        >
+          <img src={src} alt="" className="size-full object-cover" />
           {overlay}
         </div>
-        {[image2, image3].map((src, i) => (
-          <div
-            key={src}
-            ref={(el) => {
-              maskRefs.current[i] = el
-            }}
-            className="absolute inset-0"
-            style={maskStyle}
-          >
-            <img src={src} alt="" className="size-full object-cover" />
-            {overlay}
-          </div>
-        ))}
+      ))}
 
+      {/* Контент ограничен 1920px */}
+      <div className="relative mx-auto h-full max-w-[1920px]">
         <p className="absolute top-[5.5rem] left-page text-base leading-6 font-extrabold text-white uppercase">
           Для кого
         </p>
