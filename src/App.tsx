@@ -1,5 +1,6 @@
 import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
+import { ScrollWords } from './components/sections/ScrollWords'
 import { UIKit } from './components/UIKit'
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <ScrollWords />
       </main>
     </>
   )
