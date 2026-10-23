@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/manrope';
+
+/*
+ * Fluid Design: размеры плавно интерполируются между 375px (мобильный)
+ * и 1280px (ширина макета) через clamp(min, intercept + slope * vw, max).
+ * slope = (max - min) / (1280 - 375) * 100vw; intercept = min - slope * 3.75px
+ */
+@theme {
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+
+  --color-black: #141414;
+  --color-white: #fafafa;
+  --color-body: #585858;
+  --color-line: #d4d4d4;
+  --color-bg-1: #efeeeb;
+  --color-bg-2: #e9e7e1;
+
+  /* Типографика */
+  --text-hero: clamp(2.25rem, 1.525rem + 3.094vw, 4rem); /* 36 → 64 */
+  --text-price: clamp(1.125rem, 1.06rem + 0.11vw, 1.25rem); /* 18 → 20 */
+
+  /* Отступы / gap */
+  --spacing-page: clamp(1rem, 0.379rem + 2.652vw, 2.5rem); /* 16 → 40 */
+  --spacing-card: clamp(1.25rem, 0.939rem + 1.326vw, 2rem); /* 20 → 32 */
+  --spacing-gap: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
+  --spacing-gap-lg: clamp(1.5rem, 1.17rem + 1.4vw, 2rem); /* 24 → 32 */
+
+  /* Радиусы */
+  --radius-card: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-1);
+    color: var(--color-black);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-width: 320px;
+  }
+}
