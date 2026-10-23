@@ -19,7 +19,7 @@ const cellBorders = [
 
 export function Hero() {
   return (
-    <section className="mx-auto flex min-h-svh w-full max-w-[1920px] flex-col gap-gap px-page pt-gap">
+    <section className="mx-auto flex min-h-svh w-full max-w-[1920px] flex-col gap-gap px-page pt-[calc(4.5rem+var(--spacing-gap))]">
       <div className="relative flex min-h-[30rem] flex-1 flex-col justify-between gap-gap-lg overflow-hidden rounded-card bg-bg-2 p-card">
         <div className="relative z-10 flex w-full max-w-[34rem] flex-col gap-gap-lg">
           <h1 className="text-hero leading-none font-extrabold text-black">
