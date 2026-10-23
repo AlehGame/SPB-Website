@@ -1,5 +1,6 @@
 import heroImage from '../../assets/images/hero-image.webp'
-import { FillButton } from '../ui/Button'
+import { Button } from '../ui/Button'
+import { PixelMask } from '../ui/PixelMask'
 
 const features = [
   { title: '300 DPI', text: 'разрешение, полная палитра CMYK + белый' },
@@ -18,8 +19,8 @@ const cellBorders = [
 
 export function Hero() {
   return (
-    <section className="mx-auto flex w-full max-w-[1280px] flex-col gap-gap px-page pt-gap">
-      <div className="relative flex min-h-[clamp(30rem,27.5rem+10.6vw,36rem)] flex-col justify-between gap-gap-lg overflow-hidden rounded-card bg-bg-2 p-card">
+    <section className="mx-auto flex min-h-svh w-full max-w-[1920px] flex-col gap-gap px-page pt-gap">
+      <div className="relative flex min-h-[30rem] flex-1 flex-col justify-between gap-gap-lg overflow-hidden rounded-card bg-bg-2 p-card">
         <div className="relative z-10 flex w-full max-w-[34rem] flex-col gap-gap-lg">
           <h1 className="text-hero leading-none font-extrabold text-black">
             Любая картинка прямо&nbsp; у вас на стене
@@ -30,15 +31,16 @@ export function Hero() {
           </p>
         </div>
 
-        {/* Место под изображение; на десктопе — справа, на мобильном — между текстом и кнопкой */}
+        {/* Изображение лежит под сплошным слоем; PixelMask открывает его под курсором */}
         <img
           src={heroImage}
           alt="Фреска, нанесённая на стену"
-          className="aspect-[2/1] w-full rounded-[calc(var(--radius-card)/1.5)] object-cover lg:absolute lg:top-card lg:right-card lg:bottom-auto lg:aspect-auto lg:h-[55%] lg:w-[42%]"
+          className="absolute inset-0 size-full object-cover"
         />
+        <PixelMask />
 
         <div className="relative z-10 flex flex-col items-start gap-gap sm:flex-row sm:items-center">
-          <FillButton>Попробовать услугу</FillButton>
+          <Button size="lg">Попробовать услугу</Button>
           <div className="flex max-w-[15.125rem] flex-col gap-1 leading-6">
             <p className="text-price font-bold text-black">От 2500₽/м2</p>
             <p className="text-sm font-medium text-body">

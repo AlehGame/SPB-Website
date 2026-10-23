@@ -15,6 +15,19 @@
   --color-line: #d4d4d4;
   --color-bg-1: #efeeeb;
   --color-bg-2: #e9e7e1;
+  --color-pink: #e5017d;
+  --color-blue: #337ee7;
+  --color-error: #bb4141;
+  --color-field: #878787; /* плейсхолдеры */
+  --color-input: #252525; /* фон поля ввода на тёмном */
+  --color-input-line: #383838;
+
+  --brand-gradient: linear-gradient(
+    67.78deg,
+    #337ee7 18%,
+    #e5017d 50.7%,
+    #fcb911 119%
+  );
 
   /* Типографика */
   --text-hero: clamp(2.25rem, 1.525rem + 3.094vw, 4rem); /* 36 → 64 */
@@ -28,6 +41,18 @@
 
   /* Радиусы */
   --radius-card: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
+}
+
+@utility bg-brand {
+  background-image: var(--brand-gradient);
+}
+
+/* Градиентная рамка поверх прозрачного border (фон = bg-1) */
+@utility border-brand {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--color-bg-1), var(--color-bg-1)) padding-box,
+    var(--brand-gradient) border-box;
 }
 
 @layer base {
