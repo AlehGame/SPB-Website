@@ -1,5 +1,6 @@
 import { Activity } from './components/sections/Activity'
 import { ArtistPrinter } from './components/sections/ArtistPrinter'
+import { Calculator } from './components/sections/Calculator'
 import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
 import { ScrollWords } from './components/sections/ScrollWords'
@@ -19,6 +20,7 @@ export default function App() {
         <ScrollWords />
         <Activity />
         <ArtistPrinter />
+        <Calculator />
       </main>
     </>
   )
