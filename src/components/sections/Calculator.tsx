@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import { Check, Upload } from 'lucide'
-import { useUploadedImage } from '../../hooks/useUploadedImage'
+import { useCallback, useState } from 'react'
+import { ACCEPT_ATTRIBUTE, useUploadedImage } from '../../hooks/useUploadedImage'
 import {
   calcQuote,
   formatArea,
@@ -13,8 +12,9 @@ import {
 } from '../../lib/pricing'
 import { Button } from '../ui/Button'
 import { buttonClass } from '../ui/buttonClass'
-import { Icon } from '../ui/Icon'
 import { RangeSlider } from '../ui/RangeSlider'
+import { Toast } from '../ui/Toast'
+import { UploadIcon } from '../ui/UploadIcon'
 
 // Размер слоя с изображением в визуализаторе: от 20% до 100% области
 const layerSize = (value: number, min: number, max: number) => 20 + (80 * (value - min)) / (max - min)
@@ -22,8 +22,10 @@ const layerSize = (value: number, min: number, max: number) => 20 + (80 * (value
 export function Calculator() {
   const [width, setWidth] = useState(2.5)
   const [height, setHeight] = useState(2.7)
-  const wall = useUploadedImage()
-  const print = useUploadedImage()
+  const [error, setError] = useState<string | null>(null)
+  const closeError = useCallback(() => setError(null), [])
+  const wall = useUploadedImage(setError)
+  const print = useUploadedImage(setError)
 
   const quote = calcQuote(width, height)
 
@@ -92,7 +94,7 @@ export function Calculator() {
                     <input
                       ref={image.inputRef}
                       type="file"
-                      accept="image/*"
+                      accept={ACCEPT_ATTRIBUTE}
                       className="sr-only"
                       tabIndex={-1}
                       aria-label={label}
@@ -101,7 +103,8 @@ export function Calculator() {
                     <Button
                       variant="outline"
                       className="px-2"
-                      leftIcon={<Icon icon={image.url ? Check : Upload} />}
+                      leftIcon={<UploadIcon />}
+                      aria-pressed={image.url !== null}
                       onClick={image.open}
                     >
                       {label}
@@ -109,6 +112,7 @@ export function Calculator() {
                   </div>
                 ))}
               </div>
+              <p className="text-center text-xs font-medium text-body">Формат фото: png, jpeg, webp</p>
             </div>
 
             <div className="flex flex-col gap-1 rounded-[22px] bg-black px-4 pt-3 pb-[17px] text-white" aria-live="polite">
@@ -142,6 +146,7 @@ export function Calculator() {
           </div>
         </div>
       </div>
+      {error && <Toast message={error} onClose={closeError} />}
     </section>
   )
 }

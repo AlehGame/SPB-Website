@@ -10,7 +10,7 @@ export const PRICE_TIERS = [
 const SPEED_FAST = 6
 const SPEED_SLOW = 1.5
 
-export const WIDTH_RANGE = { min: 1, max: 25, step: 0.1 }
+export const WIDTH_RANGE = { min: 1, max: 100, step: 0.5 }
 export const HEIGHT_RANGE = { min: 0.5, max: 3, step: 0.1 }
 
 export function getTierIndex(area: number) {
