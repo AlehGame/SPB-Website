@@ -80,7 +80,7 @@ export function HowItWorks() {
       id="how-it-works"
       className="flex h-svh w-full flex-col gap-u70 overflow-hidden bg-bg-1 pt-[calc(72px+var(--spacing-u24))] pb-u40"
     >
-      <h2 className="px-u40 text-step leading-6 font-extrabold text-black uppercase">Как это происходит</h2>
+      <h2 className="px-u40 text-step leading-[1.5] font-extrabold text-black uppercase">Как это происходит</h2>
 
       <ul ref={trackRef} className="flex min-h-0 w-max flex-1 gap-u24 px-u40 will-change-transform">
         {steps.map(({ image, bg, title, text }, i) => (
@@ -88,10 +88,10 @@ export function HowItWorks() {
             key={title}
             className={`flex aspect-[588/634] h-full max-w-[88vw] shrink-0 flex-col gap-u24 rounded-u24 p-u32 ${bg}`}
           >
-            <p className="text-step leading-6 font-extrabold text-body uppercase">Шаг {i + 1}.</p>
+            <p className="text-step leading-[1.5] font-extrabold text-body uppercase">Шаг {i + 1}.</p>
             <img src={image} alt="" className="min-h-0 w-full flex-1 object-contain" />
             <h3 className="text-step-title leading-[1.1] font-extrabold text-black">{title}</h3>
-            <p className="text-step leading-6 text-body">{text}</p>
+            <p className="text-step leading-[1.5] text-body">{text}</p>
           </li>
         ))}
       </ul>

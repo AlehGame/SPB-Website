@@ -62,12 +62,19 @@
   }
 
   /* Масштабируемые под экран размеры (юнит --u, см. :root): для секций, которые должны расти на 2K/4K */
+  --text-u14: calc(14 * var(--u));
+  --text-u32: calc(32 * var(--u));
+  --text-u48: calc(48 * var(--u));
+  /* Крупный заголовок: fluid 36 → 64px до 1280px, дальше пропорционально ширине (до 3×) */
+  --text-display: min(max(var(--text-hero), 5vw), 192px);
   --text-step: calc(16 * var(--u));
   --text-step-title: calc(24 * var(--u));
   --spacing-u24: calc(24 * var(--u));
   --spacing-u32: calc(32 * var(--u));
   --spacing-u40: calc(40 * var(--u));
+  --spacing-u56: calc(56 * var(--u));
   --spacing-u70: calc(70 * var(--u));
+  --spacing-u96: calc(96 * var(--u));
   --radius-u24: calc(24 * var(--u));
 
   /* Радиусы */
