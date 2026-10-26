@@ -150,6 +150,17 @@
   }
 }
 
+/*
+ * ScrollTrigger при pin записывает в pin-spacer и закреплённую секцию жёсткую ширину в px.
+ * Если ширина окна меняется (resize, DevTools, зум, появление scrollbar), старая ширина остаётся
+ * шире страницы и появляется горизонтальный скролл. Ширина должна всегда следовать за макетом.
+ */
+.pin-spacer,
+[data-pinned] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 @layer base {
   :root {
     /* Насколько окно шире макета (1280px); до 1280px равно 0 */
@@ -161,6 +172,8 @@
   }
 
   html {
+    /* Страница никогда не скроллится по горизонтали (clip не создаёт scroll-контейнер) */
+    overflow-x: clip;
     font-family: var(--font-sans);
     background-color: var(--color-bg-1);
     color: var(--color-black);

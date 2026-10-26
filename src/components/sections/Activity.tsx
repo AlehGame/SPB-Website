@@ -95,7 +95,7 @@ export function Activity() {
   const overlay = <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40" />
 
   return (
-    <section ref={sectionRef} id="audience" className="relative h-svh w-full overflow-hidden bg-black">
+    <section ref={sectionRef} id="audience" data-pinned className="relative h-svh w-full overflow-hidden bg-black">
       {/* Фон секции на всю ширину экрана: фото 1 внизу, фото 2 и 3 открываются поверх радиальной маской */}
       <div className="absolute inset-0">
         <img src={image1} alt="" className="size-full object-cover" />

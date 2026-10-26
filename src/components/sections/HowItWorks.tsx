@@ -78,6 +78,7 @@ export function HowItWorks() {
     <section
       ref={sectionRef}
       id="how-it-works"
+      data-pinned
       className="flex h-svh w-full flex-col justify-center gap-17.5 overflow-hidden bg-bg-1 pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
     >
       <h2 className="px-gutter text-base leading-6 font-extrabold text-black uppercase">Как это происходит</h2>
