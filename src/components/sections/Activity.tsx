@@ -117,7 +117,7 @@ export function Activity() {
 
       {/* Контент ограничен 1920px */}
       <div className="relative mx-auto h-full max-w-[1920px]">
-        <p className="absolute top-[5.5rem] left-page text-base leading-6 font-extrabold text-white uppercase">
+        <p className="absolute top-[calc(var(--header-h)+var(--spacing-gap))] left-page text-base leading-6 font-extrabold text-white uppercase">
           Для кого
         </p>
 
@@ -142,7 +142,7 @@ export function Activity() {
                 ))}
               </h2>
               {description && (
-                <p className="hidden max-w-[24.3rem] text-base leading-6 font-normal text-white md:block">
+                <p className="hidden max-w-97 text-base leading-6 font-normal text-white md:block">
                   {description}
                 </p>
               )}

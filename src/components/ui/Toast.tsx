@@ -18,7 +18,7 @@ export function Toast({ message, onClose, duration = 5000 }: ToastProps) {
   return (
     <div
       role="alert"
-      className="fixed top-24 left-1/2 z-[60] flex w-[min(28rem,calc(100%-2rem))] -translate-x-1/2 items-start gap-3 rounded-2xl border border-error bg-black px-4 py-3 text-sm leading-5 text-white shadow-lg"
+      className="fixed top-[calc(var(--header-h)+var(--spacing-gap))] left-1/2 z-[60] flex w-[min(calc(var(--spacing)*112),calc(100%-2rem))] -translate-x-1/2 items-start gap-3 rounded-2xl border border-error bg-black px-4 py-3 text-sm leading-5 text-white shadow-lg"
     >
       <p className="flex-1">{message}</p>
       <button
@@ -27,7 +27,7 @@ export function Toast({ message, onClose, duration = 5000 }: ToastProps) {
         className="shrink-0 cursor-pointer text-white/70 hover:text-white"
         onClick={onClose}
       >
-        <Icon icon={X} size={20} />
+        <Icon icon={X} />
       </button>
     </div>
   )

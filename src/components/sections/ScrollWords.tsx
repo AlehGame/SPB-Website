@@ -16,11 +16,11 @@ function Row({ words, direction }: { words: string[]; direction: 'left' | 'right
           <ul
             key={copy}
             aria-hidden={copy === 1 || undefined}
-            className="flex shrink-0 items-center gap-[var(--gap-words)] pr-[var(--gap-words)]"
+            className="flex shrink-0 items-center gap-words pr-words"
           >
             {items.map((word, i) => (
-              <li key={i} className="flex items-center gap-[var(--gap-words)]">
-                <span className="text-words font-bold whitespace-nowrap">{word}</span>
+              <li key={i} className="flex items-center gap-words">
+                <span className="text-2xl font-bold whitespace-nowrap">{word}</span>
                 <span aria-hidden className="text-xs font-normal">
                   ✦
                 </span>
@@ -38,7 +38,7 @@ export function ScrollWords() {
   return (
     <section
       aria-label="Для кого мы печатаем"
-      className="flex w-full flex-col gap-gap py-[clamp(2rem,1.2rem+3.5vw,3.5rem)] uppercase [--gap-words:clamp(1.5rem,1.17rem+1.4vw,2.5rem)]"
+      className="fluid-wide flex w-full flex-col gap-gap py-block uppercase"
     >
       <Row words={rowLeft} direction="left" />
       <Row words={rowRight} direction="right" />

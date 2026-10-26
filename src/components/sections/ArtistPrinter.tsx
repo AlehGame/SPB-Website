@@ -27,14 +27,14 @@ export function ArtistPrinter() {
   return (
     <section
       id="artist-printer"
-      className="flex min-h-svh w-full items-center bg-white py-[clamp(3rem,1.9rem+4.7vw,6rem)]"
+      className="flex min-h-svh w-full items-center bg-white py-section"
     >
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-[clamp(2rem,1.4rem+2.6vw,3.5rem)] px-page">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
           <h2 className="max-w-[5.06em] text-hero leading-none font-extrabold text-black">
             Принтер плюс художник
           </h2>
-          <div className="max-w-[26.7rem] text-base text-body">
+          <div className="max-w-106.75 text-base text-body">
             <p>
               Принтер не печатает вплотную к углам, полу и потолку: нужен отступ 30–40 см.
               Художник-аэрографист дорисовывает его и дорабатывает печать.
@@ -47,12 +47,12 @@ export function ArtistPrinter() {
           {cards.map(({ image, number, title, text }) => (
             <li
               key={number}
-              className="flex flex-col items-center gap-4 rounded-2xl border border-line px-card pt-card pb-[clamp(2rem,1.6rem+1.7vw,3.25rem)] text-center"
+              className="flex flex-col items-center gap-4 rounded-2xl border border-line px-card pt-card pb-13 text-center"
             >
-              <img src={image} alt="" width={260} height={170} className="h-auto w-[260px] max-w-full" />
+              <img src={image} alt="" width={260} height={170} className="h-auto w-65 max-w-full" />
               <p className="text-base leading-6 text-body">{number}</p>
               <h3 className="text-xl leading-6 font-extrabold text-black">{title}</h3>
-              <p className="max-w-[20rem] text-sm leading-5 text-body">{text}</p>
+              <p className="max-w-80 text-sm leading-5 text-body">{text}</p>
             </li>
           ))}
         </ul>

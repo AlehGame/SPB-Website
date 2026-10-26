@@ -41,7 +41,7 @@ export function PixelMask({ className = '' }: { className?: string }) {
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      cell = Math.round(Math.min(28, Math.max(14, width / 60)))
+      cell = Math.round(Math.min(48, Math.max(14, width / 60)))
       cols = Math.ceil(width / cell)
       rows = Math.ceil(height / cell)
       intensity = new Float32Array(cols * rows)

@@ -30,20 +30,20 @@ export function Calculator() {
   const quote = calcQuote(width, height)
 
   return (
-    <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-[clamp(3rem,1.9rem+4.7vw,6rem)]">
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-[clamp(2rem,1.2rem+3.5vw,4.25rem)] px-page">
+    <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-section">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
           <h2 className="max-w-[7.3em] text-hero leading-none font-extrabold text-black">
             Примерьте на своей стене
           </h2>
-          <p className="max-w-[25.3rem] text-base text-body">
+          <p className="max-w-101.25 text-base text-body">
             Задайте размеры, загрузите свое изображение и фото стены. Цена и время печати считаются сразу.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-gap lg:grid-cols-[minmax(0,1fr)_24rem]">
+        <div className="grid grid-cols-1 gap-gap lg:grid-cols-[minmax(0,1fr)_calc(var(--spacing)*96)]">
           {/* Визуализатор: слой «wall image» (фото стены) и слой «image for wall» (изображение для печати) */}
-          <div className="flex flex-col rounded-[var(--radius-card)] bg-white p-page">
+          <div className="flex flex-col rounded-card bg-white p-page">
             <div className="relative aspect-[712/524] min-h-64 w-full flex-1 overflow-hidden bg-bg-1 lg:aspect-auto">
               {wall.url && <img src={wall.url} alt="Фото вашей стены" className="absolute inset-0 size-full object-cover" />}
               <div
@@ -65,7 +65,7 @@ export function Calculator() {
           </div>
 
           {/* Калькулятор */}
-          <div className="flex flex-col gap-6 rounded-[var(--radius-card)] bg-white p-6">
+          <div className="flex flex-col gap-6 rounded-card bg-white p-6">
             <div className="flex flex-col gap-3">
               <RangeSlider
                 label="Ширина"
@@ -115,10 +115,10 @@ export function Calculator() {
               <p className="text-center text-xs font-medium text-body">Формат фото: png, jpeg, webp</p>
             </div>
 
-            <div className="flex flex-col gap-1 rounded-[22px] bg-black px-4 pt-3 pb-[17px] text-white" aria-live="polite">
+            <div className="flex flex-col gap-1 rounded-card bg-black px-4 pt-3 pb-4.25 text-white" aria-live="polite">
               <p className="text-sm leading-6 font-medium">Ориентировочно</p>
-              <p className="text-[2rem] leading-tight font-bold">{formatPrice(quote.total)}</p>
-              <p className="flex flex-wrap items-center gap-x-3 text-xs leading-[14px]">
+              <p className="text-3xl leading-tight font-bold">{formatPrice(quote.total)}</p>
+              <p className="flex flex-wrap items-center gap-x-3 text-xs leading-3.5">
                 <span>
                   {formatArea(quote.area)} x {formatPrice(quote.rate)}
                 </span>
@@ -131,7 +131,7 @@ export function Calculator() {
               {PRICE_TIERS.map((tier, i) => (
                 <li
                   key={tier.label}
-                  className={`grid grid-cols-[6.06rem_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
+                  className={`grid grid-cols-[calc(var(--spacing)*24.25)_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
                 >
                   <span>{tier.label}</span>
                   <span aria-hidden className="h-1 rounded-full bg-black" style={{ width: `${tier.bar}%` }} />

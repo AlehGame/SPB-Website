@@ -19,13 +19,13 @@ const cellBorders = [
 
 export function Hero() {
   return (
-    <section className="mx-auto flex min-h-svh w-full max-w-[1920px] flex-col gap-gap px-page pt-[calc(4.5rem+var(--spacing-gap))]">
-      <div className="relative flex min-h-[30rem] flex-1 flex-col justify-between gap-gap-lg overflow-hidden rounded-card bg-bg-2 p-card">
-        <div className="relative z-10 flex w-full max-w-[34rem] flex-col gap-gap-lg">
+    <section className="mx-auto flex min-h-svh w-full max-w-[1920px] flex-col gap-gap px-page pt-[calc(var(--header-h)+var(--spacing-gap))]">
+      <div className="relative flex min-h-120 flex-1 flex-col justify-between gap-gap-lg overflow-hidden rounded-card bg-bg-2 p-card">
+        <div className="relative z-10 flex w-full max-w-136 flex-col gap-gap-lg">
           <h1 className="text-hero leading-none font-extrabold text-black">
             Любая картинка прямо&nbsp; у вас на стене
           </h1>
-          <p className="max-w-[30rem] text-base leading-6 text-body">
+          <p className="max-w-120 text-base leading-6 text-body">
             У нас нет ограничений, вы можете скачать или сгенерировать в ИИ любое
             изображение и мы нанесем его на вашу стену.
           </p>
@@ -41,8 +41,8 @@ export function Hero() {
 
         <div className="relative z-10 flex flex-col items-start gap-gap sm:flex-row sm:items-center">
           <Button size="lg">Попробовать услугу</Button>
-          <div className="flex max-w-[15.125rem] flex-col gap-1 leading-6">
-            <p className="text-price font-bold text-black">От 2500₽/м2</p>
+          <div className="flex max-w-60.5 flex-col gap-1 leading-6">
+            <p className="text-xl font-bold text-black">От 2500₽/м2</p>
             <p className="text-sm font-medium text-body">
               Чем больше площадь, тем дешевле.
             </p>

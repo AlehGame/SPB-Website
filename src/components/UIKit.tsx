@@ -7,7 +7,7 @@ import { MenuLink } from './ui/MenuLink'
 // Витрина UI-компонентов: открывается по адресу /#ui-kit
 export function UIKit() {
   return (
-    <div className="mx-auto flex max-w-[1280px] flex-col gap-12 px-page py-12">
+    <div className="mx-auto flex max-w-320 flex-col gap-12 px-page py-12">
       {(['fill', 'outline'] as const).map((variant) => (
         <section key={variant} className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">{variant === 'fill' ? 'Fill buttons' : 'Outline buttons'}</h2>
@@ -40,7 +40,7 @@ export function UIKit() {
 
       <section className="flex flex-col gap-4 rounded-card bg-black p-card">
         <h2 className="text-xl font-bold text-white">Input field</h2>
-        <div className="grid max-w-[28rem] gap-4">
+        <div className="grid max-w-112 gap-4">
           <InputField label="Label" placeholder="Placeholder" helper="Helper text" leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />
           <InputField label="Error" placeholder="Placeholder" helper="Helper text" error leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />
           <InputField label="Disabled" placeholder="Placeholder" helper="Helper text" disabled leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />

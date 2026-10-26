@@ -1,7 +1,7 @@
 // Иконка из Assets/icons/upload icon.svg; цвет штриха наследуется от текста кнопки
 export function UploadIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden className="shrink-0">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden className="size-5 shrink-0">
       <g
         stroke="currentColor"
         strokeWidth="1.5"

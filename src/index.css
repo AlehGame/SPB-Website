@@ -1,11 +1,47 @@
-@import 'tailwindcss';
+﻿@import 'tailwindcss';
 @import '@fontsource-variable/manrope';
 
 /*
- * Fluid Design: размеры плавно интерполируются между 375px (мобильный)
- * и 1280px (ширина макета) через clamp(min, intercept + slope * vw, max).
- * slope = (max - min) / (1280 - 375) * 100vw; intercept = min - slope * 3.75px
+ * Fluid Design.
+ *
+ * --u — «1 px макета»: 0.875px на 375px, 1px на 1280px (ширина макета), дальше растёт
+ * пропорционально ширине. По умолчанию рост останавливается на 1920px (--u = 1.5px), потому что
+ * контейнеры секций ограничены 1920px. Секции и блоки на всю ширину экрана (класс fluid-wide)
+ * продолжают расти до 4K (--u = 3px).
+ *
+ * На --u завязана шкала отступов Tailwind (--spacing = 4u), поэтому p-4, gap-6, h-10 и т.д.
+ * масштабируются сами. Шрифты и крупные отступы ниже: плавный диапазон 375→1280
+ * (clamp(min, intercept + slope·vw, max)), после 1280px — пропорционально ширине, но не выше --u-max.
+ *
+ * Токены объявлены через `inline`, чтобы --u и --u-max можно было переопределять на уровне секции.
  */
+@theme inline {
+  --spacing: calc(4 * var(--u));
+
+  /* Типографика (заменяет стандартные размеры Tailwind) */
+  --text-xs: min(max(0.75rem, 0.9375vw), calc(12 * var(--u-max))); /* 12 */
+  --text-sm: min(max(0.875rem, 1.09375vw), calc(14 * var(--u-max))); /* 14 */
+  --text-base: min(max(1rem, 1.25vw), calc(16 * var(--u-max))); /* 16 */
+  --text-xl: min(max(1.125rem, 1.5625vw), calc(20 * var(--u-max))); /* 20 */
+  --text-2xl: min(max(1.25rem, 1.875vw), calc(24 * var(--u-max))); /* 24 */
+  --text-3xl: min(max(1.75rem, 2.5vw), calc(32 * var(--u-max))); /* 32 */
+  --text-5xl: min(max(2.5rem, 3.75vw), calc(48 * var(--u-max))); /* 48 */
+  --text-hero: min(max(clamp(2.25rem, 1.525rem + 3.094vw, 4rem), 5vw), calc(64 * var(--u-max))); /* 36 → 64 */
+
+  /* Радиусы */
+  --radius-2xl: calc(16 * var(--u));
+  --radius-card: calc(24 * var(--u));
+
+  /* Крупные отступы */
+  --spacing-page: min(max(clamp(1rem, 0.379rem + 2.652vw, 2.5rem), 3.125vw), calc(40 * var(--u-max))); /* 16 → 40 */
+  --spacing-card: min(max(clamp(1.25rem, 0.939rem + 1.326vw, 2rem), 2.5vw), calc(32 * var(--u-max))); /* 20 → 32 */
+  --spacing-gap: min(max(clamp(1rem, 0.793rem + 0.884vw, 1.5rem), 1.875vw), calc(24 * var(--u-max))); /* 16 → 24 */
+  --spacing-gap-lg: min(max(clamp(1.5rem, 1.17rem + 1.4vw, 2rem), 2.5vw), calc(32 * var(--u-max))); /* 24 → 32 */
+  --spacing-words: min(max(clamp(1.5rem, 1.17rem + 1.4vw, 2.5rem), 3.125vw), calc(40 * var(--u-max))); /* 24 → 40 */
+  --spacing-block: min(max(clamp(2rem, 1.4rem + 2.6vw, 3.5rem), 4.375vw), calc(56 * var(--u-max))); /* 32 → 56 */
+  --spacing-section: min(max(clamp(3rem, 1.9rem + 4.7vw, 6rem), 7.5vw), calc(96 * var(--u-max))); /* 48 → 96 */
+}
+
 @theme {
   --font-sans: 'Manrope Variable', system-ui, sans-serif;
 
@@ -16,7 +52,6 @@
   --color-bg-1: #efeeeb;
   --color-bg-2: #e9e7e1;
   --color-pink: #e5017d;
-  --color-blue: #337ee7;
   --color-error: #bb4141;
   --color-field: #878787; /* плейсхолдеры */
   --color-input: #252525; /* фон поля ввода на тёмном */
@@ -26,23 +61,7 @@
   --color-sand: #f1e9db;
   --color-sky: #dbe5f1;
 
-  --brand-gradient: linear-gradient(
-    67.78deg,
-    #337ee7 18%,
-    #e5017d 50.7%,
-    #fcb911 119%
-  );
-
-  /* Типографика */
-  --text-hero: clamp(2.25rem, 1.525rem + 3.094vw, 4rem); /* 36 → 64 */
-  --text-words: clamp(1.125rem, 1.01rem + 0.49vw, 1.5rem); /* 18 → 24 */
-  --text-price: clamp(1.125rem, 1.06rem + 0.11vw, 1.25rem); /* 18 → 20 */
-
-  /* Отступы / gap */
-  --spacing-page: clamp(1rem, 0.379rem + 2.652vw, 2.5rem); /* 16 → 40 */
-  --spacing-card: clamp(1.25rem, 0.939rem + 1.326vw, 2rem); /* 20 → 32 */
-  --spacing-gap: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
-  --spacing-gap-lg: clamp(1.5rem, 1.17rem + 1.4vw, 2rem); /* 24 → 32 */
+  --brand-gradient: linear-gradient(67.78deg, #337ee7 18%, #e5017d 50.7%, #fcb911 119%);
 
   /* Бегущие строки: сдвиг ровно на половину трека (две одинаковые копии) */
   --animate-marquee-left: marquee-left 40s linear infinite;
@@ -60,25 +79,12 @@
       transform: translateX(0);
     }
   }
+}
 
-  /* Масштабируемые под экран размеры (юнит --u, см. :root): для секций, которые должны расти на 2K/4K */
-  --text-u14: calc(14 * var(--u));
-  --text-u32: calc(32 * var(--u));
-  --text-u48: calc(48 * var(--u));
-  /* Крупный заголовок: fluid 36 → 64px до 1280px, дальше пропорционально ширине (до 3×) */
-  --text-display: min(max(var(--text-hero), 5vw), 192px);
-  --text-step: calc(16 * var(--u));
-  --text-step-title: calc(24 * var(--u));
-  --spacing-u24: calc(24 * var(--u));
-  --spacing-u32: calc(32 * var(--u));
-  --spacing-u40: calc(40 * var(--u));
-  --spacing-u56: calc(56 * var(--u));
-  --spacing-u70: calc(70 * var(--u));
-  --spacing-u96: calc(96 * var(--u));
-  --radius-u24: calc(24 * var(--u));
-
-  /* Радиусы */
-  --radius-card: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
+/* Секция/блок на всю ширину экрана: масштабируется до 4K, а не до 1920px */
+@utility fluid-wide {
+  --u: var(--u-wide);
+  --u-max: 3px;
 }
 
 @utility bg-brand {
@@ -97,41 +103,43 @@
 @layer components {
   .range {
     --p: 0%;
+    --thumb: calc(12 * var(--u));
+    --track: calc(4 * var(--u));
     appearance: none;
     width: 100%;
-    height: 12px;
+    height: var(--thumb);
     background: transparent;
     cursor: pointer;
   }
   .range::-webkit-slider-runnable-track {
-    height: 4px;
+    height: var(--track);
     border-radius: 9999px;
     background:
-      linear-gradient(to right, #337ee7, #e5017d, #fcb911) 0 0 / var(--p) 100% no-repeat,
+      var(--brand-gradient) 0 0 / var(--p) 100% no-repeat,
       var(--color-line);
   }
   .range::-webkit-slider-thumb {
     appearance: none;
-    width: 12px;
-    height: 12px;
-    margin-top: -4px;
+    width: var(--thumb);
+    height: var(--thumb);
+    margin-top: calc((var(--track) - var(--thumb)) / 2);
     border: 1px solid var(--color-line);
     border-radius: 9999px;
     background: var(--color-white);
   }
   .range::-moz-range-track {
-    height: 4px;
+    height: var(--track);
     border-radius: 9999px;
     background: var(--color-line);
   }
   .range::-moz-range-progress {
-    height: 4px;
+    height: var(--track);
     border-radius: 9999px;
-    background: linear-gradient(to right, #337ee7, #e5017d, #fcb911);
+    background: var(--brand-gradient);
   }
   .range::-moz-range-thumb {
-    width: 10px;
-    height: 10px;
+    width: calc(var(--thumb) - 2px);
+    height: calc(var(--thumb) - 2px);
     border: 1px solid var(--color-line);
     border-radius: 9999px;
     background: var(--color-white);
@@ -139,10 +147,7 @@
   .range:focus-visible {
     outline: none;
   }
-  .range:focus-visible::-webkit-slider-thumb {
-    outline: 2px solid var(--color-black);
-    outline-offset: 2px;
-  }
+  .range:focus-visible::-webkit-slider-thumb,
   .range:focus-visible::-moz-range-thumb {
     outline: 2px solid var(--color-black);
     outline-offset: 2px;
@@ -151,11 +156,11 @@
 
 @layer base {
   :root {
-    /*
-     * Fluid-юнит «1 px макета»: 0.875px на 375px, 1px на 1280px (ширина макета),
-     * дальше растёт пропорционально ширине (2K ≈ 2px, 4K = 3px, дальше не растёт).
-     */
-    --u: min(max(calc(0.8232px + 0.0138vw), calc(100vw / 1280)), 3px);
+    --u-wide: min(max(calc(0.8232px + 0.0138vw), calc(100vw / 1280)), 3px);
+    --u-max: 1.5px;
+    --u: min(var(--u-wide), var(--u-max));
+    /* Высота фиксированного header вместе с отступом сверху (header масштабируется до 4K) */
+    --header-h: calc(76 * var(--u-wide));
   }
 
   html {
@@ -169,3 +174,4 @@
     min-width: 320px;
   }
 }
+
