@@ -21,6 +21,10 @@
   --color-field: #878787; /* плейсхолдеры */
   --color-input: #252525; /* фон поля ввода на тёмном */
   --color-input-line: #383838;
+  --color-lilac: #dddbf1;
+  --color-mint: #e7f1db;
+  --color-sand: #f1e9db;
+  --color-sky: #dbe5f1;
 
   --brand-gradient: linear-gradient(
     67.78deg,
@@ -56,6 +60,15 @@
       transform: translateX(0);
     }
   }
+
+  /* Масштабируемые под экран размеры (юнит --u, см. :root): для секций, которые должны расти на 2K/4K */
+  --text-step: calc(16 * var(--u));
+  --text-step-title: calc(24 * var(--u));
+  --spacing-u24: calc(24 * var(--u));
+  --spacing-u32: calc(32 * var(--u));
+  --spacing-u40: calc(40 * var(--u));
+  --spacing-u70: calc(70 * var(--u));
+  --radius-u24: calc(24 * var(--u));
 
   /* Радиусы */
   --radius-card: clamp(1rem, 0.793rem + 0.884vw, 1.5rem); /* 16 → 24 */
@@ -130,6 +143,14 @@
 }
 
 @layer base {
+  :root {
+    /*
+     * Fluid-юнит «1 px макета»: 0.875px на 375px, 1px на 1280px (ширина макета),
+     * дальше растёт пропорционально ширине (2K ≈ 2px, 4K = 3px, дальше не растёт).
+     */
+    --u: min(max(calc(0.8232px + 0.0138vw), calc(100vw / 1280)), 3px);
+  }
+
   html {
     font-family: var(--font-sans);
     background-color: var(--color-bg-1);

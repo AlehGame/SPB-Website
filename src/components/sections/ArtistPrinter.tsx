@@ -26,7 +26,7 @@ const cards = [
 export function ArtistPrinter() {
   return (
     <section
-      id="how-it-works"
+      id="artist-printer"
       className="flex min-h-svh w-full items-center bg-white py-[clamp(3rem,1.9rem+4.7vw,6rem)]"
     >
       <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-[clamp(2rem,1.4rem+2.6vw,3.5rem)] px-page">
