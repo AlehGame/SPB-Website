@@ -31,7 +31,7 @@ export function Calculator() {
 
   return (
     <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-section">
-      <div className="flex w-full flex-col gap-block px-page">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
           <h2 className="max-w-[7.3em] text-hero leading-none font-extrabold text-black">
             Примерьте на своей стене

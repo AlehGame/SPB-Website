@@ -115,8 +115,8 @@ export function Activity() {
         </div>
       ))}
 
-      {/* Контент секции */}
-      <div className="relative h-full">
+      {/* Контейнер контента: максимум 1920px */}
+      <div className="relative mx-auto h-full max-w-[1920px]">
         <p className="absolute top-[calc(var(--header-h)+var(--spacing-gap))] left-page text-base leading-6 font-extrabold text-white uppercase">
           Для кого
         </p>

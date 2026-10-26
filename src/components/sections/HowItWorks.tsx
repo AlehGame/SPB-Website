@@ -78,11 +78,11 @@ export function HowItWorks() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="flex h-svh w-full flex-col gap-17.5 overflow-hidden bg-bg-1 pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
+      className="flex h-svh w-full flex-col justify-center gap-17.5 overflow-hidden bg-bg-1 pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
     >
-      <h2 className="px-page text-base leading-6 font-extrabold text-black uppercase">Как это происходит</h2>
+      <h2 className="px-gutter text-base leading-6 font-extrabold text-black uppercase">Как это происходит</h2>
 
-      <ul ref={trackRef} className="flex min-h-0 w-max flex-1 gap-gap px-page will-change-transform">
+      <ul ref={trackRef} className="flex max-h-158.5 min-h-0 w-max flex-1 gap-gap pr-page pl-gutter will-change-transform">
         {steps.map(({ image, bg, title, text }, i) => (
           <li
             key={title}
