@@ -5,6 +5,7 @@ import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
 import { HowItWorks } from './components/sections/HowItWorks'
 import { Numbers } from './components/sections/Numbers'
+import { Portfolio } from './components/sections/Portfolio'
 import { ScrollWords } from './components/sections/ScrollWords'
 import { UIKit } from './components/UIKit'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
@@ -25,6 +26,7 @@ export default function App() {
         <Calculator />
         <HowItWorks />
         <Numbers />
+        <Portfolio />
       </main>
     </>
   )

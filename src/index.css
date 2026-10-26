@@ -67,6 +67,7 @@
   /* Бегущие строки: сдвиг ровно на половину трека (две одинаковые копии) */
   --animate-marquee-left: marquee-left 40s linear infinite;
   --animate-marquee-right: marquee-right 40s linear infinite;
+  --animate-slow-scroll: marquee-right 120s linear infinite;
   @keyframes marquee-left {
     to {
       transform: translateX(-50%);
