@@ -29,7 +29,7 @@ export function ArtistPrinter() {
       id="artist-printer"
       className="flex min-h-svh w-full items-center bg-white py-section"
     >
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
+      <div className="flex w-full flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
           <h2 className="max-w-[5.06em] text-hero leading-none font-extrabold text-black">
             Принтер плюс художник
@@ -60,3 +60,4 @@ export function ArtistPrinter() {
     </section>
   )
 }
+

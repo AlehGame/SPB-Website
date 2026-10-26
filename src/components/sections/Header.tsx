@@ -16,7 +16,7 @@ const links = [
 // Фиксированный header на всю ширину окна (без max-width)
 export function Header() {
   return (
-    <header className="fluid-wide fixed inset-x-page top-4 z-50 flex items-center justify-between gap-gap rounded-full border border-line bg-bg-1/80 py-2 pr-2 pl-5.5 backdrop-blur-[10px]">
+    <header className="fixed inset-x-page top-4 z-50 flex items-center justify-between gap-gap rounded-full border border-line bg-bg-1/80 py-2 pr-2 pl-5.5 backdrop-blur-[10px]">
       <a href="#" aria-label="Cool Print — на главную" className="shrink-0">
         <img src={logo} alt="Cool Print" width={51} height={30} className="h-7.5 w-12.75" />
       </a>
@@ -39,3 +39,4 @@ export function Header() {
     </header>
   )
 }
+

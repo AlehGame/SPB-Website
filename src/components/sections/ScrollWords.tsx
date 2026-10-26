@@ -38,10 +38,11 @@ export function ScrollWords() {
   return (
     <section
       aria-label="Для кого мы печатаем"
-      className="fluid-wide flex w-full flex-col gap-gap py-block uppercase"
+      className="flex w-full flex-col gap-gap py-block uppercase"
     >
       <Row words={rowLeft} direction="left" />
       <Row words={rowRight} direction="right" />
     </section>
   )
 }
+

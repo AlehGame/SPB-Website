@@ -1,19 +1,14 @@
-﻿@import 'tailwindcss';
+@import 'tailwindcss';
 @import '@fontsource-variable/manrope';
 
 /*
  * Fluid Design.
  *
  * --u — «1 px макета»: 0.875px на 375px, 1px на 1280px (ширина макета), дальше растёт
- * пропорционально ширине. По умолчанию рост останавливается на 1920px (--u = 1.5px), потому что
- * контейнеры секций ограничены 1920px. Секции и блоки на всю ширину экрана (класс fluid-wide)
- * продолжают расти до 4K (--u = 3px).
- *
+ * пропорционально ширине (2K ≈ 2px, 4K = 3px, выше не растёт, см. --u-max).
  * На --u завязана шкала отступов Tailwind (--spacing = 4u), поэтому p-4, gap-6, h-10 и т.д.
  * масштабируются сами. Шрифты и крупные отступы ниже: плавный диапазон 375→1280
  * (clamp(min, intercept + slope·vw, max)), после 1280px — пропорционально ширине, но не выше --u-max.
- *
- * Токены объявлены через `inline`, чтобы --u и --u-max можно было переопределять на уровне секции.
  */
 @theme inline {
   --spacing: calc(4 * var(--u));
@@ -79,12 +74,6 @@
       transform: translateX(0);
     }
   }
-}
-
-/* Секция/блок на всю ширину экрана: масштабируется до 4K, а не до 1920px */
-@utility fluid-wide {
-  --u: var(--u-wide);
-  --u-max: 3px;
 }
 
 @utility bg-brand {
@@ -156,11 +145,10 @@
 
 @layer base {
   :root {
-    --u-wide: min(max(calc(0.8232px + 0.0138vw), calc(100vw / 1280)), 3px);
-    --u-max: 1.5px;
-    --u: min(var(--u-wide), var(--u-max));
-    /* Высота фиксированного header вместе с отступом сверху (header масштабируется до 4K) */
-    --header-h: calc(76 * var(--u-wide));
+    --u-max: 3px;
+    --u: min(max(calc(0.8232px + 0.0138vw), calc(100vw / 1280)), var(--u-max));
+    /* Высота фиксированного header вместе с отступом сверху */
+    --header-h: calc(76 * var(--u));
   }
 
   html {
@@ -174,4 +162,5 @@
     min-width: 320px;
   }
 }
+
 

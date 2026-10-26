@@ -25,7 +25,7 @@ const bigText = 'text-3xl leading-tight font-bold'
 
 export function Numbers() {
   return (
-    <section id="numbers" className="fluid-wide flex w-full flex-col gap-block bg-bg-1 px-page py-section">
+    <section id="numbers" className="flex w-full flex-col gap-block bg-bg-1 px-page py-section">
       <h2 className="max-w-[7.3em] text-hero leading-none font-extrabold text-black">Надежность и цифры</h2>
 
       {/* Ширины блоков в рядах заданы пропорциями макета (327:491:334 и 412:302:438) */}
@@ -71,3 +71,4 @@ export function Numbers() {
     </section>
   )
 }
+
