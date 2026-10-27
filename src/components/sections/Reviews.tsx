@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import review1 from '../../assets/video/review-1.mp4'
 import review2 from '../../assets/video/review-2.mp4'
 import review3 from '../../assets/video/review-3.mp4'
+import { Marquee } from '../ui/Marquee'
 import { PlayIcon } from '../ui/PlayIcon'
 
 const videos = [review1, review2, review3]
@@ -67,11 +68,12 @@ function VideoCard({ src, active, hidden, onToggle, onEnded }: VideoCardProps) {
   )
 }
 
-// Лента идёт слева направо; пауза при наведении на видео и пока видео играет со звуком
+const items = Array.from({ length: REPEATS }, () => videos).flat()
+
+// Лента на паузе, пока видео играет со звуком
 function Track() {
   const [activeId, setActiveId] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
-  const items = Array.from({ length: REPEATS }, () => videos).flat()
 
   // Если секция ушла с экрана, звук выключаем
   useEffect(() => {
@@ -85,14 +87,11 @@ function Track() {
   }, [])
 
   return (
-    <div ref={rootRef} className="flex w-full overflow-hidden">
-      {/* Две одинаковые копии: на -50% трек возвращается в исходную точку — цикл без шва */}
-      <div
-        data-playing={activeId !== null || undefined}
-        className="flex w-max shrink-0 animate-slow-scroll will-change-transform has-[li:hover]:[animation-play-state:paused] data-playing:[animation-play-state:paused]"
-      >
-        {[0, 1].map((copy) => (
-          <ul key={copy} aria-hidden={copy === 1 || undefined} className="flex shrink-0 gap-gap pr-gap">
+    <div ref={rootRef}>
+      <Marquee
+        paused={activeId !== null}
+        renderCopy={(copy) => (
+          <ul aria-hidden={copy === 1 || undefined} className="flex shrink-0 gap-gap pr-gap">
             {items.map((src, i) => {
               const id = `${copy}-${i}`
               return (
@@ -107,8 +106,8 @@ function Track() {
               )
             })}
           </ul>
-        ))}
-      </div>
+        )}
+      />
     </div>
   )
 }
