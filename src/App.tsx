@@ -1,4 +1,5 @@
 import { Activity } from './components/sections/Activity'
+import { Additional } from './components/sections/Additional'
 import { ArtistPrinter } from './components/sections/ArtistPrinter'
 import { Calculator } from './components/sections/Calculator'
 import { Contact } from './components/sections/Contact'
@@ -25,6 +26,7 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <Additional />
         <ScrollWords />
         <Activity />
         <ArtistPrinter />

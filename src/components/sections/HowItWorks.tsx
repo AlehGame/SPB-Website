@@ -79,9 +79,9 @@ export function HowItWorks() {
       ref={sectionRef}
       id="how-it-works"
       data-pinned
-      className="flex h-svh w-full flex-col justify-center gap-17.5 overflow-hidden bg-bg-1 pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
+      className="flex h-svh w-full flex-col justify-center gap-6 overflow-hidden bg-white pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
     >
-      <h2 className="px-gutter text-base leading-6 font-extrabold text-black uppercase">Как это происходит</h2>
+      <h2 className="px-gutter text-hero leading-none font-extrabold text-black">Как это происходит</h2>
 
       <ul ref={trackRef} className="flex max-h-158.5 min-h-0 w-max flex-1 gap-gap pr-page pl-gutter will-change-transform">
         {steps.map(({ image, bg, title, text }, i) => (

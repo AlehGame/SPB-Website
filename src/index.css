@@ -25,7 +25,8 @@
   --text-2xl: min(calc(min(max(1.25rem, 1.875vw), 24px) + var(--grow) * 0.009375), 30px); /* 24 */
   --text-3xl: min(calc(min(max(1.75rem, 2.5vw), 32px) + var(--grow) * 0.0125), 40px); /* 32 */
   --text-5xl: min(calc(min(max(2.5rem, 3.75vw), 48px) + var(--grow) * 0.01875), 60px); /* 48 */
-  --text-hero: min(calc(clamp(2.25rem, 1.525rem + 3.094vw, 4rem) + var(--grow) * 0.025), 80px); /* 36 → 64 → 80 */
+  --text-display: min(calc(clamp(2.5rem, 1.05rem + 6.188vw, 6rem) + var(--grow) * 0.0375), 120px); /* 40 → 96 → 120 */
+  --text-hero:min(calc(clamp(2.25rem, 1.525rem + 3.094vw, 4rem) + var(--grow) * 0.025), 80px); /* 36 → 64 → 80 */
 
   /* Радиусы */
   --radius-2xl: calc(16 * var(--u));
