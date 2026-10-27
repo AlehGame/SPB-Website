@@ -17,12 +17,20 @@ const maskStyle = { WebkitMaskImage: wipeMask, maskImage: wipeMask }
 // Один заголовок = одна «страница» текста внутри окна-маски
 const titles = [
   {
-    lines: ['Школы,', 'Детские сады,', 'Институты,', 'Поликлинники'],
+    title: 'Школы, Детские сады, Институты, Поликлинники',
     description:
       'Школы получают дизайн-проект, бизнес получает точный цвет бренда, квартиры получают любую картинку дешевле фотообоев.',
   },
-  { lines: ['Офисы,', 'Кафе,', 'Рестораны'] },
-  { lines: ['Частные', 'дома'] },
+  {
+    title: 'Кафе, Рестораны, Офисы',
+    description:
+      'Выбирайте любое изображение или логотип своей компании и мы подготовим все для печати с учетом вашего брендбука.',
+  },
+  {
+    title: 'Частные дома, Квартиры',
+    description:
+      'Добавьте своему дому красок! Напечатаем любое изображение в вашей комнате, гостинной, детской комнате или кухне!',
+  },
 ]
 
 export function Activity() {
@@ -92,7 +100,7 @@ export function Activity() {
     return () => ctx.revert()
   }, [])
 
-  const overlay = <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40" />
+  const overlay = <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
 
   return (
     <section ref={sectionRef} id="audience" data-pinned className="relative h-svh w-full overflow-hidden bg-black">
@@ -117,35 +125,23 @@ export function Activity() {
 
       {/* Контейнер контента: максимум 1920px */}
       <div className="relative mx-auto h-full max-w-[1920px]">
-        <p className="absolute top-[calc(var(--header-h)+var(--spacing-gap))] left-page text-base leading-6 font-extrabold text-white uppercase">
-          Для кого
-        </p>
+        <p className="absolute top-16 left-page text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
 
-        {/* Окно-маска: заголовки скользят внутри и обрезаются по краям */}
+        {/* Окно-маска высотой в 4 строки: заголовки скользят внутри и обрезаются по краям */}
         <div
           ref={windowRef}
-          className="absolute inset-x-page bottom-page h-[4.25em] overflow-hidden text-hero leading-none font-bold text-white"
+          className="absolute inset-x-page bottom-16 h-[4em] overflow-hidden text-hero leading-none text-white"
         >
-          {titles.map(({ lines, description }, i) => (
+          {titles.map(({ title, description }, i) => (
             <div
-              key={lines[0]}
+              key={title}
               ref={(el) => {
                 titleRefs.current[i] = el
               }}
               className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-gap-lg"
             >
-              <h2 className="font-bold">
-                {lines.map((line) => (
-                  <span key={line} className="block whitespace-nowrap">
-                    {line}
-                  </span>
-                ))}
-              </h2>
-              {description && (
-                <p className="hidden max-w-97 text-base leading-6 font-normal text-white md:block">
-                  {description}
-                </p>
-              )}
+              <h2 className="max-w-[7em]">{title}</h2>
+              <p className="hidden max-w-97 text-base leading-6 md:block">{description}</p>
             </div>
           ))}
         </div>
