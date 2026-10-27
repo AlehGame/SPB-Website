@@ -125,7 +125,7 @@ export function Activity() {
 
       {/* Контейнер контента: максимум 1920px */}
       <div className="relative mx-auto h-full max-w-[1920px]">
-        <p className="absolute top-16 left-page text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
+        <p className="absolute top-[calc(var(--header-h)+var(--spacing-gap))] left-page text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
 
         {/* Окно-маска высотой в 4 строки: заголовки скользят внутри и обрезаются по краям */}
         <div
