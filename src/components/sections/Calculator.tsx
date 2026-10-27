@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
-import { ACCEPT_ATTRIBUTE, useUploadedImage } from '../../hooks/useUploadedImage'
+import { useUploadedImage } from '../../hooks/useUploadedImage'
+import { ACCEPT_ATTRIBUTE } from '../../lib/imageFormats'
 import {
   calcQuote,
   formatArea,

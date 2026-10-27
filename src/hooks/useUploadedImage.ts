@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
-
-export const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp']
-export const ACCEPT_ATTRIBUTE = ACCEPTED_IMAGE_TYPES.join(',')
+import { ACCEPTED_IMAGE_TYPES } from '../lib/imageFormats'
 
 // Выбор изображения пользователем: превью через object URL (файл никуда не отправляется).
 // Если формат не подходит, вызывается onReject с текстом ошибки.
