@@ -3,6 +3,7 @@ import { ArtistPrinter } from './components/sections/ArtistPrinter'
 import { Calculator } from './components/sections/Calculator'
 import { Contact } from './components/sections/Contact'
 import { Faqs } from './components/sections/Faqs'
+import { Footer } from './components/sections/Footer'
 import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
 import { HowItWorks } from './components/sections/HowItWorks'
@@ -36,6 +37,7 @@ export default function App() {
         <Location />
         <Contact />
       </main>
+      <Footer />
     </>
   )
 }
