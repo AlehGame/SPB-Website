@@ -1,5 +1,5 @@
 import heroVideo from '../../assets/video/hero.mp4'
-import { Button } from '../ui/Button'
+import { buttonClass } from '../ui/buttonClass'
 
 export function Hero() {
   return (
@@ -27,7 +27,9 @@ export function Hero() {
         </div>
 
         <div className="flex flex-col items-start gap-6 sm:flex-row-reverse sm:items-center sm:self-start lg:self-auto">
-          <Button size="lg">Попробовать услугу</Button>
+          <a href="#prices" className={buttonClass('fill', 'lg')}>
+            Попробовать услугу
+          </a>
           <div className="flex flex-col gap-1 leading-6 whitespace-nowrap sm:items-end">
             <p className="text-xl font-bold">От 2500₽/м2</p>
             <p className="text-sm font-medium">Чем больше, тем дешевле.</p>

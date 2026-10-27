@@ -1,6 +1,5 @@
 import { Phone } from 'lucide'
 import logo from '../../assets/icons/logo.svg'
-import { Button } from '../ui/Button'
 import { buttonClass } from '../ui/buttonClass'
 import { Icon } from '../ui/Icon'
 import { MenuLink } from '../ui/MenuLink'
@@ -30,7 +29,9 @@ export function Header() {
       </nav>
 
       <div className="flex items-center gap-2">
-        <Button>Рассчитать</Button>
+        <a href="#prices" className={buttonClass()}>
+          Рассчитать
+        </a>
         <a href="tel:+79213633647" aria-label="+7 921 363 36 47" className={buttonClass('outline')}>
           <Icon icon={Phone} />
           <span className="hidden sm:inline">+7 921 363 36 47</span>
