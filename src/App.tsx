@@ -1,6 +1,7 @@
 import { Activity } from './components/sections/Activity'
 import { ArtistPrinter } from './components/sections/ArtistPrinter'
 import { Calculator } from './components/sections/Calculator'
+import { Faqs } from './components/sections/Faqs'
 import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
 import { HowItWorks } from './components/sections/HowItWorks'
@@ -29,6 +30,7 @@ export default function App() {
         <Numbers />
         <Portfolio />
         <Reviews />
+        <Faqs />
       </main>
     </>
   )
