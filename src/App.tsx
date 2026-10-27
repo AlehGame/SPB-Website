@@ -5,6 +5,7 @@ import { Faqs } from './components/sections/Faqs'
 import { Header } from './components/sections/Header'
 import { Hero } from './components/sections/Hero'
 import { HowItWorks } from './components/sections/HowItWorks'
+import { Location } from './components/sections/Location'
 import { Numbers } from './components/sections/Numbers'
 import { Portfolio } from './components/sections/Portfolio'
 import { Reviews } from './components/sections/Reviews'
@@ -31,6 +32,7 @@ export default function App() {
         <Portfolio />
         <Reviews />
         <Faqs />
+        <Location />
       </main>
     </>
   )
