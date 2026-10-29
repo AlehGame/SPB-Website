@@ -1,17 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import review1 from '../../assets/video/review-1.mp4'
-import review2 from '../../assets/video/review-2.mp4'
-import review3 from '../../assets/video/review-3.mp4'
+import { useSanityList } from '../../hooks/useSanityList'
+import { FALLBACK_REVIEWS, fetchReviews, type Review } from '../../lib/reviews'
 import { Marquee } from '../ui/Marquee'
 import { PlayIcon } from '../ui/PlayIcon'
 
-const videos = [review1, review2, review3]
-
-// Сколько раз повторяем набор видео внутри одной копии, чтобы она была шире экрана
-const REPEATS = 3
+// Лента должна быть шире экрана: повторяем набор видео, пока их не наберётся хотя бы столько
+const MIN_CARDS = 6
 
 interface VideoCardProps {
   src: string
+  title?: string
   active: boolean
   hidden: boolean
   onToggle: () => void
@@ -19,7 +17,7 @@ interface VideoCardProps {
 }
 
 // Превью: чёрно-белое, без звука, зациклено. Активная карточка: цвет, звук и с самого начала.
-function VideoCard({ src, active, hidden, onToggle, onEnded }: VideoCardProps) {
+function VideoCard({ src, title, active, hidden, onToggle, onEnded }: VideoCardProps) {
   const ref = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -54,7 +52,7 @@ function VideoCard({ src, active, hidden, onToggle, onEnded }: VideoCardProps) {
       <button
         type="button"
         tabIndex={hidden ? -1 : 0}
-        aria-label={active ? 'Остановить видео-отзыв' : 'Смотреть видео-отзыв со звуком'}
+        aria-label={`${active ? 'Остановить видео-отзыв' : 'Смотреть видео-отзыв со звуком'}${title ? `: ${title}` : ''}`}
         onClick={onToggle}
         className="absolute inset-0 flex cursor-pointer items-center justify-center text-white outline-none"
       >
@@ -68,10 +66,9 @@ function VideoCard({ src, active, hidden, onToggle, onEnded }: VideoCardProps) {
   )
 }
 
-const items = Array.from({ length: REPEATS }, () => videos).flat()
-
 // Лента на паузе, пока видео играет со звуком
-function Track() {
+function Track({ reviews }: { reviews: Review[] }) {
+  const items = Array.from({ length: Math.ceil(MIN_CARDS / reviews.length) }, () => reviews).flat()
   const [activeId, setActiveId] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
 
@@ -92,12 +89,13 @@ function Track() {
         paused={activeId !== null}
         renderCopy={(copy) => (
           <ul aria-hidden={copy === 1 || undefined} className="flex shrink-0 gap-gap pr-gap">
-            {items.map((src, i) => {
+            {items.map(({ video, title }, i) => {
               const id = `${copy}-${i}`
               return (
                 <VideoCard
                   key={id}
-                  src={src}
+                  src={video}
+                  title={title}
                   active={activeId === id}
                   hidden={copy === 1}
                   onToggle={() => setActiveId(activeId === id ? null : id)}
@@ -113,12 +111,14 @@ function Track() {
 }
 
 export function Reviews() {
+  const reviews = useSanityList(fetchReviews, FALLBACK_REVIEWS, 'reviews')
+
   return (
     <section id="reviews" className="flex w-full flex-col gap-block overflow-hidden bg-bg-1 py-section">
       <div className="mx-auto w-full max-w-[1920px] px-page">
         <h2 className="text-hero leading-none font-extrabold text-black">Клиенты говорят</h2>
       </div>
-      <Track />
+      {reviews && reviews.length > 0 && <Track reviews={reviews} />}
     </section>
   )
 }

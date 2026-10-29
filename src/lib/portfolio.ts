@@ -4,6 +4,8 @@ import project3 from '../assets/images/project-3.webp'
 import project4 from '../assets/images/project-4.webp'
 import project5 from '../assets/images/project-5.webp'
 
+import { sanityQuery } from './sanity'
+
 export interface Project {
   id: string
   image: string
@@ -22,11 +24,6 @@ export const FALLBACK_PROJECTS: Project[] = [
   { id: '5', image: project5, name: 'Ресторан', place: 'Санкт-Петербург', area: 18.3 },
 ]
 
-// Project ID не секрет; значение по умолчанию страхует от пустой переменной окружения при сборке
-const projectId: string = import.meta.env.VITE_SANITY_PROJECT_ID || 'fy6hrt2t'
-const dataset: string = import.meta.env.VITE_SANITY_DATASET || 'production'
-const API_VERSION = '2025-01-01'
-
 // Ширина картинки с запасом под retina: карточка 283px
 const IMAGE_PARAMS = '?w=600&auto=format'
 
@@ -43,14 +40,8 @@ interface SanityProject {
   image: string
 }
 
-export const isSanityConfigured = Boolean(projectId)
-
-// Публичная выборка через CDN Sanity; токен не нужен, датасет должен быть публичным
 export async function fetchProjects(signal?: AbortSignal): Promise<Project[]> {
-  const url = `https://${projectId}.apicdn.sanity.io/v${API_VERSION}/data/query/${dataset}?query=${encodeURIComponent(QUERY)}`
-  const response = await fetch(url, { signal })
-  if (!response.ok) throw new Error(`Sanity: ${response.status}`)
-  const { result } = (await response.json()) as { result: SanityProject[] }
+  const result = await sanityQuery<SanityProject[]>(QUERY, signal)
   return result.map(({ _id, title, location, area, image }) => ({
     id: _id,
     image: image + IMAGE_PARAMS,

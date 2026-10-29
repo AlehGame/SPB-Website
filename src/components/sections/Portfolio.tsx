@@ -1,5 +1,5 @@
-import { usePortfolioProjects } from '../../hooks/usePortfolioProjects'
-import type { Project } from '../../lib/portfolio'
+import { useSanityList } from '../../hooks/useSanityList'
+import { FALLBACK_PROJECTS, fetchProjects, type Project } from '../../lib/portfolio'
 import { Marquee } from '../ui/Marquee'
 
 // Лента должна быть шире экрана: повторяем набор карточек, пока их не наберётся хотя бы столько
@@ -43,7 +43,7 @@ function Track({ projects }: { projects: Project[] }) {
 }
 
 export function Portfolio() {
-  const projects = usePortfolioProjects()
+  const projects = useSanityList(fetchProjects, FALLBACK_PROJECTS, 'portfolio')
 
   return (
     <section

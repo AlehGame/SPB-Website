@@ -1,5 +1,5 @@
 /**
- * Загружает в Sanity пять стартовых проектов с картинками из src/assets/images.
+ * Загружает в Sanity стартовые проекты (картинки из src/assets/images) и три видео-отзыва (src/assets/video).
  * Запуск (после `npx sanity login`), из папки studio/:
  *   npx sanity exec scripts/seed.ts --with-user-token
  * Повторный запуск обновляет те же документы, дубликатов не создаёт.
@@ -31,4 +31,20 @@ for (const [index, { file, title, location, area }] of projects.entries()) {
     image: { _type: 'image', asset: { _type: 'reference', _ref: asset._id } },
   })
   console.log(`✓ ${title}`)
+}
+
+for (const n of [1, 2, 3]) {
+  const file = `review-${n}.mp4`
+  const asset = await client.assets.upload('file', createReadStream(`../src/assets/video/${file}`), {
+    filename: file,
+    contentType: 'video/mp4',
+  })
+  await client.createOrReplace({
+    _id: `seed-review-${n}`,
+    _type: 'review',
+    title: `Видео-отзыв ${n}`,
+    order: n,
+    video: { _type: 'file', asset: { _type: 'reference', _ref: asset._id } },
+  })
+  console.log(`✓ Видео-отзыв ${n}`)
 }
