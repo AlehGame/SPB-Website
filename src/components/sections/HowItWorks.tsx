@@ -1,20 +1,16 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import step1 from '../../assets/images/how-1.webp'
 import step2 from '../../assets/images/how-2.webp'
 import step3 from '../../assets/images/how-3.webp'
 import step4 from '../../assets/images/how-4.webp'
 import step5 from '../../assets/images/how-5.webp'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useDragScroll } from '../../hooks/useDragScroll'
 
 const steps = [
   {
     image: step1,
     bg: 'bg-lilac',
     title: 'Фото и размеры стен',
-    text: 'Присылаете фото и размеры, мы считаем стоимость. Для школ выезжаем на замер.',
+    text: 'Присылайте фото стены и её размеры, после чего мы рассчитаем для вас актуальную стоимость. Для школ выезжаем на замер.',
   },
   {
     image: step2,
@@ -25,78 +21,52 @@ const steps = [
   {
     image: step3,
     bg: 'bg-sand',
-    title: 'Установка принтера',
+    title: 'Установка принтера в помещении',
     text: 'Оборудование заносят в помещение, собирают и печатают. Мебель и пол закрывают, стену готовить не нужно. Габариты Ш 1.5м x В 2м.',
   },
   {
     image: step4,
     bg: 'bg-sky',
-    title: 'Печать изображения',
+    title: 'Печать изображения на стену',
     text: 'Слой за слоем, краска сохнет сразу под УФ-лампой. Скорость 1,5–6 м²/ч, высота до 3 м за проход.',
   },
   {
     image: step5,
-    bg: 'bg-white',
-    title: 'Доработка художником',
+    bg: 'bg-bg-1',
+    title: 'Доработка нашим художником',
     text: 'Художник закрывает технические отступы у углов, пола и потолка и добавляет авторские детали.',
   },
 ]
 
-// Секция на весь экран закрепляется, а вертикальный скролл двигает ленту карточек горизонтально
+// Обычная карусель: листается колесом, пальцем и зажатой кнопкой мыши
 export function HowItWorks() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const trackRef = useRef<HTMLUListElement>(null)
-
-  useEffect(() => {
-    const section = sectionRef.current
-    const track = trackRef.current
-    if (!section || !track) return
-
-    // Насколько нужно сдвинуть ленту, чтобы последняя карточка дошла до правого края
-    const getDistance = () => Math.max(0, track.scrollWidth - window.innerWidth)
-
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: () => -getDistance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${getDistance()}`,
-          pin: true,
-          scrub: 0.6,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      })
-    }, section)
-
-    return () => ctx.revert()
-  }, [])
+  const listRef = useDragScroll()
 
   return (
-    <section
-      ref={sectionRef}
-      id="how-it-works"
-      data-pinned
-      className="flex h-svh w-full flex-col justify-center gap-6 overflow-hidden bg-white pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
-    >
+    <section id="how-it-works" className="flex w-full flex-col gap-17.5 bg-white pt-section pb-page">
       <h2 className="px-gutter text-hero leading-none font-extrabold text-black">Как это происходит</h2>
 
-      <ul ref={trackRef} className="flex max-h-158.5 min-h-0 w-max flex-1 gap-gap pr-page pl-gutter will-change-transform">
+      <div
+        ref={listRef}
+        className="flex cursor-grab gap-gap overflow-x-auto px-gutter select-none [scrollbar-width:none] data-dragging:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+      >
         {steps.map(({ image, bg, title, text }, i) => (
-          <li
+          <article
             key={title}
-            className={`flex aspect-[588/634] h-full max-w-[88vw] shrink-0 flex-col gap-gap rounded-card p-card ${bg}`}
+            className={`flex w-[min(88vw,calc(var(--spacing)*147))] shrink-0 flex-col gap-gap rounded-card p-card ${bg}`}
           >
             <p className="text-base leading-6 font-extrabold text-body uppercase">Шаг {i + 1}.</p>
-            <img src={image} alt="" className="min-h-0 w-full flex-1 object-contain" />
-            <h3 className="text-2xl leading-[1.1] font-extrabold text-black">{title}</h3>
+            <img
+              src={image}
+              alt=""
+              draggable={false}
+              className="aspect-[524/402] w-full object-contain"
+            />
+            <h3 className="text-2xl leading-6 font-extrabold text-black">{title}</h3>
             <p className="text-base leading-6 text-body">{text}</p>
-          </li>
+          </article>
         ))}
-      </ul>
+      </div>
     </section>
   )
 }
-

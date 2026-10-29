@@ -1,4 +1,4 @@
-import { useId, type SelectHTMLAttributes } from 'react'
+import { useId, useRef, type SelectHTMLAttributes } from 'react'
 import { ChevronDown } from 'lucide'
 import { Field, type FieldProps } from './Field'
 import { controlBase } from './fieldClass'
@@ -26,7 +26,16 @@ export function SelectField({
 }: SelectFieldProps) {
   const autoId = useId()
   const selectId = id ?? autoId
+  const selectRef = useRef<HTMLSelectElement>(null)
   const empty = value === ''
+
+  // Иконка тоже открывает список; с клавиатуры список открывается самим select
+  const openList = () => {
+    const select = selectRef.current
+    if (!select) return
+    select.focus()
+    select.showPicker?.()
+  }
 
   return (
     <Field
@@ -35,9 +44,14 @@ export function SelectField({
       helper={helper}
       error={error}
       className={className}
-      rightIcon={<Icon icon={ChevronDown} className="pointer-events-none text-field" />}
+      rightIcon={
+        <button type="button" tabIndex={-1} aria-hidden onClick={openList} className="cursor-pointer">
+          <Icon icon={ChevronDown} className="text-field" />
+        </button>
+      }
     >
       <select
+        ref={selectRef}
         id={selectId}
         value={value}
         aria-invalid={error || undefined}
