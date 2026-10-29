@@ -19,6 +19,13 @@ function scrollTo(target: number | HTMLElement) {
 
 export const scrollToTop = () => scrollTo(0)
 
+// Блокировка прокрутки страницы (например, пока открыто мобильное меню)
+export function lockScroll(locked: boolean) {
+  if (locked) lenis?.stop()
+  else lenis?.start()
+  document.documentElement.style.overflow = locked ? 'hidden' : ''
+}
+
 // Секция с pin живёт внутри .pin-spacer — позиция считается по нему, иначе при скролле снизу будет сдвиг
 function anchorTarget(hash: string) {
   if (hash === '#') return 0
