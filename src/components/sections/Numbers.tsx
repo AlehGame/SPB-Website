@@ -5,23 +5,26 @@ interface BlockProps {
   /** Ширина блока в ряду (доля), по макету */
   grow: string
   dark?: boolean
+  className?: string
   children: ReactNode
 }
 
-function Block({ label, grow, dark = false, children }: BlockProps) {
+function Block({ label, grow, dark = false, className = '', children }: BlockProps) {
   return (
     <li
-      className={`flex min-h-62.25 flex-col justify-between gap-gap rounded-card p-gap ${grow} ${
+      className={`flex flex-col justify-between gap-12 rounded-card p-gap lg:min-h-62.25 lg:gap-gap ${grow} ${
         dark ? 'bg-black text-white' : 'bg-white text-black'
-      }`}
+      } ${className}`}
     >
-      <p className={`text-sm uppercase ${dark ? 'font-normal text-white' : 'font-semibold text-body'}`}>{label}</p>
+      <p className={`text-sm uppercase ${dark ? 'font-normal text-white' : 'font-normal text-body md:font-semibold'}`}>
+        {label}
+      </p>
       {children}
     </li>
   )
 }
 
-const bigText = 'text-3xl leading-10 font-bold'
+const bigText = 'text-2xl leading-8 font-bold md:text-3xl md:leading-10'
 
 export function Numbers() {
   return (
@@ -32,19 +35,19 @@ export function Numbers() {
         {/* Ширины блоков в рядах заданы пропорциями макета (327:491:334 и 412:302:438) */}
         <div className="flex flex-col gap-gap">
           <ul className="flex flex-col gap-gap lg:flex-row">
-            <Block label="Светостойкость" grow="lg:flex-[327_1_0%]">
+            <Block label="Светостойкость" grow="lg:flex-[327_1_0%]" className="max-lg:min-h-62.25 max-lg:gap-8">
               <div className="flex flex-col gap-gap">
-                <p className="bg-brand bg-clip-text text-hero font-bold text-transparent uppercase">
+                <p className="bg-brand bg-clip-text text-[4rem] font-bold text-transparent uppercase lg:text-hero">
                   8 лет
                 </p>
                 <p className="text-base leading-6">По данным производителя чернил</p>
               </div>
             </Block>
             <Block label="Стойкость" grow="lg:flex-[491_1_0%]">
-              <p className={`${bigText} max-w-[9.66em]`}>Не боится царапин и стирания, печать не сползает</p>
+              <p className={`${bigText} lg:max-w-[9.66em]`}>Не боится царапин и стирания, печать не сползает</p>
             </Block>
             <Block label="Безопасность" grow="lg:flex-[334_1_0%]">
-              <p className={`${bigText} max-w-[9em]`}>Негорючие чернила</p>
+              <p className={`${bigText} lg:max-w-[9em]`}>Негорючие чернила</p>
             </Block>
           </ul>
 
@@ -52,7 +55,7 @@ export function Numbers() {
             <Block label="Поверхности" grow="lg:flex-[412_1_0%]">
               <p className={bigText}>Одни чернила для любых поверхностей, в том числе шероховатых</p>
             </Block>
-            <Block label="Цвет" grow="lg:flex-[302_1_0%]" dark>
+            <Block label="Цвет" grow="lg:flex-[302_1_0%]" className="max-lg:gap-8" dark>
               <div className="flex flex-col gap-gap">
                 <p className="text-5xl font-bold whitespace-nowrap">
                   <span className="text-[#4ba5ef]">C</span>
@@ -64,8 +67,8 @@ export function Numbers() {
                 <p className="text-base leading-6">Белый слой под цветом: яркость на тёмных и цветных стенах.</p>
               </div>
             </Block>
-            <Block label="Изображения" grow="lg:flex-[438_1_0%]">
-              <p className={`${bigText} max-w-[11.25em]`}>Любая картинка из интернета, нейросети или логотип</p>
+            <Block label="Изображения" grow="lg:flex-[438_1_0%]" className="pr-13.5">
+              <p className={bigText}>Любая картинка из интернета, нейросети или логотип</p>
             </Block>
           </ul>
         </div>

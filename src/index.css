@@ -4,12 +4,13 @@
 /*
  * Fluid Design + Responsive.
  *
- *  • 375 → 1280px — Fluid: размеры плавно растут от мобильных значений к макетным (1280px).
+ *  • до 1280px — мобильный (393px) и десктопный (1280px) макеты рисуются 1:1; шрифты и крупные
+ *    отступы плавно меняются между ними, остальные размеры задаёт брейкпоинт (md, lg).
  *  • 1280 → 1920px — размеры растут медленно (до +25%), сверх этого контент не увеличивается.
  *  • Выше 1920px — Responsive: контейнеры секций ограничены 1920px и центрируются, фон секций
  *    остаётся на всю ширину окна, размеры больше не растут (на 2K/4K ничего не «раздувается»).
  *
- * --u — «1 px макета»: 0.875px на 375px, 1px на 1280px, 1.25px на 1920px (и дальше). На --u завязана
+ * --u — «1 px макета»: 1px до 1280px, 1.25px на 1920px (и дальше). На --u завязана
  * шкала отступов Tailwind (--spacing = 4u), поэтому p-4, gap-6, h-10 и т.д. масштабируются сами.
  * Шрифты и крупные отступы: плавный диапазон до 1280px + рост выше 1280px (--grow × коэффициент),
  * с потолком в 1.25 от макетного значения. Токены объявлены через `inline`.
@@ -21,12 +22,12 @@
   --text-xs: min(calc(0.75rem + var(--grow) * 0.0046875), 15px); /* 12 */
   --text-sm: min(calc(0.875rem + var(--grow) * 0.0054688), 17.5px); /* 14 */
   --text-base: min(calc(1rem + var(--grow) * 0.00625), 20px); /* 16 */
-  --text-xl: min(calc(min(max(1.125rem, 1.5625vw), 20px) + var(--grow) * 0.0078125), 25px); /* 20 */
-  --text-2xl: min(calc(min(max(1.25rem, 1.875vw), 24px) + var(--grow) * 0.009375), 30px); /* 24 */
-  --text-3xl: min(calc(min(max(1.75rem, 2.5vw), 32px) + var(--grow) * 0.0125), 40px); /* 32 */
-  --text-5xl: min(calc(min(max(2.5rem, 3.75vw), 48px) + var(--grow) * 0.01875), 60px); /* 48 */
-  --text-display: min(calc(clamp(2.5rem, 1.05rem + 6.188vw, 6rem) + var(--grow) * 0.0375), 120px); /* 40 → 96 → 120 */
-  --text-hero:min(calc(clamp(2.25rem, 1.525rem + 3.094vw, 4rem) + var(--grow) * 0.025), 80px); /* 36 → 64 → 80 */
+  --text-xl: min(calc(1.25rem + var(--grow) * 0.0078125), 25px); /* 20 */
+  --text-2xl: min(calc(1.5rem + var(--grow) * 0.009375), 30px); /* 24 */
+  --text-3xl: min(calc(2rem + var(--grow) * 0.0125), 40px); /* 32 */
+  --text-5xl: min(calc(3rem + var(--grow) * 0.01875), 60px); /* 48 */
+  --text-display: min(calc(clamp(2.875rem, 1.49rem + 5.637vw, 6rem) + var(--grow) * 0.0375), 120px); /* 46 → 96 → 120 */
+  --text-hero: min(calc(clamp(2.875rem, 2.377rem + 2.029vw, 4rem) + var(--grow) * 0.025), 80px); /* 46 → 64 → 80 */
 
   /* Радиусы */
   --radius-2xl: calc(16 * var(--u));
@@ -34,12 +35,12 @@
 
   /* Крупные отступы */
   --spacing-page: min(calc(clamp(1rem, 0.379rem + 2.652vw, 2.5rem) + var(--grow) * 0.015625), 50px); /* 16 → 40 */
-  --spacing-card: min(calc(clamp(1.25rem, 0.939rem + 1.326vw, 2rem) + var(--grow) * 0.0125), 40px); /* 20 → 32 */
-  --spacing-gap: min(calc(clamp(1rem, 0.793rem + 0.884vw, 1.5rem) + var(--grow) * 0.009375), 30px); /* 16 → 24 */
+  --spacing-card: min(calc(2rem + var(--grow) * 0.0125), 40px); /* 32 */
+  --spacing-gap: min(calc(1.5rem + var(--grow) * 0.009375), 30px); /* 24 */
   --spacing-gap-lg: min(calc(clamp(1.5rem, 1.17rem + 1.4vw, 2rem) + var(--grow) * 0.0125), 40px); /* 24 → 32 */
   --spacing-words: min(calc(clamp(1.5rem, 1.17rem + 1.4vw, 2.5rem) + var(--grow) * 0.015625), 50px); /* 24 → 40 */
-  --spacing-block: min(calc(clamp(2rem, 1.4rem + 2.6vw, 3.5rem) + var(--grow) * 0.021875), 70px); /* 32 → 56 */
-  --spacing-section: min(calc(clamp(3rem, 1.9rem + 4.7vw, 6rem) + var(--grow) * 0.0375), 120px); /* 48 → 96 */
+  --spacing-block: min(calc(3.5rem + var(--grow) * 0.021875), 70px); /* 56 */
+  --spacing-section: min(calc(clamp(3.5rem, 2.4rem + 4.7vw, 6rem) + var(--grow) * 0.0375), 120px); /* 56 → 96 */
   /* Левый отступ контента, выровненный по контейнеру 1920px (для горизонтальной ленты) */
   --spacing-gutter: max(var(--spacing-page), calc((100vw - 1920px) / 2 + var(--spacing-page)));
 }
@@ -158,8 +159,8 @@
   :root {
     /* Насколько окно шире макета (1280px); до 1280px равно 0 */
     --grow: max(0px, calc(100vw - 1280px));
-    /* 0.8232px + 0.0138vw — рост 375→1280; 0.5px + 0.0390625vw — рост 1280→1920; потолок 1.25px */
-    --u: min(max(calc(0.8232px + 0.0138vw), calc(0.5px + 0.0390625vw)), 1.25px);
+    /* 1px до 1280px (мобильный макет 393px и десктопный 1280px рисуются 1:1); 0.5px + 0.0390625vw — рост 1280→1920; потолок 1.25px */
+    --u: min(max(1px, calc(0.5px + 0.0390625vw)), 1.25px);
     /* Высота фиксированного header вместе с отступом сверху */
     --header-h: calc(76 * var(--u));
   }

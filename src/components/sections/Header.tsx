@@ -1,4 +1,4 @@
-import { Phone } from 'lucide'
+import { Menu, Phone } from 'lucide'
 import logo from '../../assets/icons/logo.svg'
 import { useActiveSection } from '../../hooks/useActiveSection'
 import { buttonClass } from '../ui/buttonClass'
@@ -20,7 +20,7 @@ export function Header() {
   const activeId = useActiveSection(sectionIds)
 
   return (
-    <header className="fixed inset-x-page top-4 z-50 flex items-center justify-between gap-gap rounded-full border border-line bg-bg-1/80 py-2 pr-2 pl-5.5 backdrop-blur-[10px]">
+    <header className="fixed inset-x-page top-3.25 z-50 flex items-center justify-between gap-gap rounded-full border border-line bg-bg-1/80 py-2 pr-2 pl-5.5 backdrop-blur-[10px] md:top-4">
       <a href="#" aria-label="Cool Print — на главную" className="shrink-0">
         <img src={logo} alt="Cool Print" width={51} height={30} className="h-7.5 w-12.75" />
       </a>
@@ -33,16 +33,23 @@ export function Header() {
         ))}
       </nav>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4 md:gap-2">
         <a href="#prices" className={buttonClass()}>
           Рассчитать
         </a>
-        <a href="tel:+79213633647" aria-label="+7 921 363 36 47" className={buttonClass('outline')}>
+        <a href="tel:+79213633647" className={`${buttonClass('outline')} max-md:hidden`}>
           <Icon icon={Phone} />
-          <span className="hidden sm:inline">+7 921 363 36 47</span>
+          +7 921 363 36 47
         </a>
+        {/* Кнопка меню мобильной версии: само раскрывающееся меню пока не сделано */}
+        <button
+          type="button"
+          aria-label="Меню"
+          className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-black text-black md:hidden"
+        >
+          <Icon icon={Menu} className="size-6" />
+        </button>
       </div>
     </header>
   )
 }
-

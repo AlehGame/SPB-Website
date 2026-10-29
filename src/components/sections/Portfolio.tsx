@@ -33,7 +33,7 @@ function Track() {
                 width={283}
                 height={tall ? 390 : 358}
                 draggable={false}
-                className={`w-full object-cover ${tall ? 'h-97.5' : 'h-89.5'}`}
+                className={`w-full object-cover ${tall ? 'h-143 md:h-97.5' : 'h-131.25 md:h-89.5'}`}
               />
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm leading-6 font-extrabold tracking-[0.05em] text-white uppercase">{name}</h3>
@@ -54,7 +54,7 @@ export function Portfolio() {
   return (
     <section
       id="cases"
-      className="flex min-h-[min(100svh,calc(var(--spacing)*225))] w-full flex-col justify-between gap-block overflow-hidden bg-black pt-[calc(var(--header-h)+var(--spacing-gap))] pb-page"
+      className="flex w-full md:min-h-[min(100svh,calc(var(--spacing)*225))] flex-col justify-between gap-block overflow-hidden bg-black py-section md:pt-[calc(var(--header-h)+var(--spacing-gap))] md:pb-page"
     >
       <div className="mx-auto w-full max-w-[1920px] px-page">
         <h2 className="text-hero leading-none font-extrabold text-white">Кейсы</h2>

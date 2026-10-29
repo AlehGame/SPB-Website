@@ -125,12 +125,12 @@ export function Activity() {
 
       {/* Контейнер контента: максимум 1920px */}
       <div className="relative mx-auto h-full max-w-[1920px]">
-        <p className="absolute top-[calc(var(--header-h)+var(--spacing-gap))] left-page text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
+        <p className="absolute top-47.5 left-page md:top-[calc(var(--header-h)+var(--spacing-gap))] text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
 
         {/* Окно-маска высотой в 4 строки: заголовки скользят внутри и обрезаются по краям */}
         <div
           ref={windowRef}
-          className="absolute inset-x-page bottom-16 h-[4em] overflow-hidden text-hero leading-none text-white"
+          className="absolute inset-x-page bottom-10 h-78 overflow-hidden text-hero leading-[1.04] text-white md:bottom-16 md:h-[4em] md:leading-none"
         >
           {titles.map(({ title, description }, i) => (
             <div
@@ -138,10 +138,10 @@ export function Activity() {
               ref={(el) => {
                 titleRefs.current[i] = el
               }}
-              className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-gap-lg"
+              className="absolute inset-x-0 bottom-0 flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-gap-lg"
             >
-              <h2 className="max-w-[7em]">{title}</h2>
-              <p className="hidden max-w-97 text-base leading-6 md:block">{description}</p>
+              <h2 className="max-w-[7.7em] md:max-w-[7em]">{title}</h2>
+              <p className="text-xl leading-6 font-medium md:max-w-97 md:text-base md:font-normal">{description}</p>
             </div>
           ))}
         </div>

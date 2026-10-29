@@ -27,7 +27,7 @@ export function ArtistPrinter() {
   return (
     <section
       id="artist-printer"
-      className="flex min-h-svh w-full items-center bg-white py-section"
+      className="flex min-h-svh w-full items-center bg-white py-22 md:py-section"
     >
       <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
@@ -38,8 +38,8 @@ export function ArtistPrinter() {
             <p>
               Принтер не печатает вплотную к углам, полу и потолку: нужен отступ 30–40 см.
               Художник-аэрографист дорисовывает его и дорабатывает печать.
+              <br className="hidden md:block" /> Отдельно ни один из них не даёт такого результата.
             </p>
-            <p>Отдельно ни один из них не даёт такого результата.</p>
           </div>
         </div>
 
@@ -47,7 +47,7 @@ export function ArtistPrinter() {
           {cards.map(({ image, number, title, text }) => (
             <li
               key={number}
-              className="flex flex-col items-center gap-4 rounded-2xl border border-line px-card pt-card pb-13 text-center"
+              className="flex flex-col items-center gap-4 rounded-2xl border border-line px-card pt-card pb-8 text-center md:pb-13"
             >
               <img src={image} alt="" width={260} height={170} className="h-auto w-65 max-w-full" />
               <p className="text-base leading-6 text-body">{number}</p>

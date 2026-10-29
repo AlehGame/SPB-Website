@@ -37,7 +37,7 @@ function VideoCard({ src, active, hidden, onToggle, onEnded }: VideoCardProps) {
   }, [active])
 
   return (
-    <li className="group/card relative h-122 w-96 shrink-0 overflow-hidden rounded-card bg-black">
+    <li className="group/card relative h-147 w-80 shrink-0 overflow-hidden md:h-122 md:w-96 rounded-card bg-black">
       <video
         ref={ref}
         src={src}

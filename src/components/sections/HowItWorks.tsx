@@ -43,7 +43,7 @@ export function HowItWorks() {
   const listRef = useDragScroll()
 
   return (
-    <section id="how-it-works" className="flex w-full flex-col gap-17.5 bg-white pt-section pb-page">
+    <section id="how-it-works" className="flex w-full flex-col gap-14 bg-white py-section md:gap-17.5 md:pb-page">
       <h2 className="px-gutter text-hero leading-none font-extrabold text-black">Как это происходит</h2>
 
       <div
@@ -53,7 +53,7 @@ export function HowItWorks() {
         {steps.map(({ image, bg, title, text }, i) => (
           <article
             key={title}
-            className={`flex w-[min(88vw,calc(var(--spacing)*147))] shrink-0 flex-col gap-gap rounded-card p-card ${bg}`}
+            className={`flex w-90 shrink-0 flex-col gap-gap rounded-card p-6 md:w-[min(88vw,calc(var(--spacing)*147))] md:p-card ${bg}`}
           >
             <p className="text-base leading-6 font-extrabold text-body uppercase">Шаг {i + 1}.</p>
             <img
@@ -62,7 +62,7 @@ export function HowItWorks() {
               draggable={false}
               className="aspect-[524/402] w-full object-contain"
             />
-            <h3 className="text-2xl leading-6 font-extrabold text-black">{title}</h3>
+            <h3 className="text-2xl leading-8 font-extrabold text-black md:leading-6">{title}</h3>
             <p className="text-base leading-6 text-body">{text}</p>
           </article>
         ))}

@@ -31,7 +31,7 @@ export function Calculator() {
   const quote = calcQuote(width, height)
 
   return (
-    <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-section">
+    <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-22 md:py-section">
       <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-block px-page">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
           <h2 className="max-w-[7.3em] text-hero leading-none font-extrabold text-black">
@@ -44,8 +44,8 @@ export function Calculator() {
 
         <div className="grid grid-cols-1 gap-gap lg:grid-cols-[minmax(0,1fr)_calc(var(--spacing)*96)]">
           {/* Визуализатор: слой «wall image» (фото стены) и слой «image for wall» (изображение для печати) */}
-          <div className="flex flex-col rounded-card bg-white p-page">
-            <div className="relative aspect-[712/524] min-h-64 w-full flex-1 overflow-hidden bg-bg-1 lg:aspect-auto">
+          <div className="flex flex-col rounded-card bg-white p-10 max-md:aspect-[361/291] md:p-page">
+            <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-bg-1 md:aspect-[712/524] md:min-h-64 lg:aspect-auto">
               {wall.url && <img src={wall.url} alt="Фото вашей стены" className="absolute inset-0 size-full object-cover" />}
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden transition-[width,height] duration-150 ease-out"
@@ -66,7 +66,7 @@ export function Calculator() {
           </div>
 
           {/* Калькулятор */}
-          <div className="flex flex-col gap-6 rounded-card bg-white p-6">
+          <div className="flex flex-col gap-6 rounded-card bg-white px-4 py-6 md:p-6">
             <div className="flex flex-col gap-3">
               <RangeSlider
                 label="Ширина"
@@ -86,7 +86,7 @@ export function Calculator() {
 
             <div className="flex flex-col gap-4">
               <p className="text-sm font-bold text-black">Загрузите фото стены и изображение</p>
-              <div className="grid grid-cols-1 gap-1 min-[420px]:grid-cols-2">
+              <div className="grid grid-cols-2 gap-1">
                 {[
                   { label: 'Фото стены', image: wall },
                   { label: 'Фото для печати', image: print },
@@ -103,7 +103,7 @@ export function Calculator() {
                     />
                     <Button
                       variant="outline"
-                      className="px-2"
+                      className="px-3"
                       leftIcon={<UploadIcon />}
                       aria-pressed={image.url !== null}
                       onClick={image.open}

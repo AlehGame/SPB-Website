@@ -24,7 +24,7 @@ export function Faqs() {
   return (
     <section id="faqs" className="w-full bg-white py-section">
       <div className="mx-auto flex w-full max-w-[1920px] flex-col justify-between gap-block px-page lg:flex-row">
-        <div className="flex w-70.75 shrink-0 flex-col gap-6">
+        <div className="flex w-full shrink-0 flex-col gap-6 lg:w-70.75">
           <h2 className="text-hero leading-none font-extrabold text-black">Частые вопросы</h2>
           <p className="text-base leading-6 text-body">Не нашли свой? Напишите в мессенджер, ответим сразу.</p>
         </div>
@@ -42,7 +42,7 @@ export function Faqs() {
                   onClick={() => setOpenIndex(open ? null : i)}
                   className="flex w-full cursor-pointer items-start justify-between gap-7 py-6 text-left"
                 >
-                  <span className="text-xl leading-6 font-semibold text-black">{question}</span>
+                  <span className="text-xl leading-7 font-semibold text-black md:leading-6">{question}</span>
                   <Icon icon={open ? X : Plus} className="size-6 text-black" />
                 </button>
                 <div

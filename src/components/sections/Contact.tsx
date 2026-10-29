@@ -14,16 +14,16 @@ export function Contact() {
 
   return (
     <section id="contacts" className="w-full bg-black py-section text-white">
-      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-22.25 px-page">
+      <div className="mx-auto flex w-full max-w-[1920px] flex-col gap-14 px-page md:gap-22.25">
         <div className="flex flex-col justify-between gap-gap-lg lg:flex-row lg:items-end">
-          <h2 className="max-w-[5.7em] text-hero leading-none font-extrabold">Обсудим вашу стену</h2>
+          <h2 className="text-hero md:max-w-[5.7em] leading-none font-extrabold">Обсудим вашу стену</h2>
           <p className="max-w-116.5 text-base leading-6">
             Опишите задачу и приложите фото. Для школ и садов подготовим визуализацию и коммерческое предложение.
           </p>
         </div>
 
         {/* key меняется после успешной отправки — форма (и поле файла) очищается */}
-        <form key={sentCount} noValidate onSubmit={submit} className="grid grid-cols-1 gap-gap md:grid-cols-2">
+        <form key={sentCount} noValidate onSubmit={submit} className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-gap">
           <InputField
             name="name"
             label="Имя"
@@ -88,7 +88,7 @@ export function Contact() {
             onChange={(event) => setField('website', event.target.value)}
           />
 
-          <div className="flex flex-col gap-3 md:col-span-2">
+          <div className="mt-4 flex flex-col gap-3 md:col-span-2 md:mt-0">
             <Button
               type="submit"
               variant="outline-light"
