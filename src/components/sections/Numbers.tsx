@@ -15,13 +15,13 @@ function Block({ label, grow, dark = false, children }: BlockProps) {
         dark ? 'bg-black text-white' : 'bg-white text-black'
       }`}
     >
-      <p className={`text-sm uppercase ${dark ? 'text-white' : 'text-body'}`}>{label}</p>
+      <p className={`text-sm uppercase ${dark ? 'font-normal text-white' : 'font-semibold text-body'}`}>{label}</p>
       {children}
     </li>
   )
 }
 
-const bigText = 'text-3xl leading-tight font-bold'
+const bigText = 'text-3xl leading-10 font-bold'
 
 export function Numbers() {
   return (
@@ -34,16 +34,16 @@ export function Numbers() {
           <ul className="flex flex-col gap-gap lg:flex-row">
             <Block label="Светостойкость" grow="lg:flex-[327_1_0%]">
               <div className="flex flex-col gap-gap">
-                <p className="bg-brand bg-clip-text text-hero leading-none font-bold text-transparent uppercase">
+                <p className="bg-brand bg-clip-text text-hero font-bold text-transparent uppercase">
                   8 лет
                 </p>
-                <p className="text-base leading-normal">По данным производителя чернил</p>
+                <p className="text-base leading-6">По данным производителя чернил</p>
               </div>
             </Block>
             <Block label="Стойкость" grow="lg:flex-[491_1_0%]">
-              <p className={`${bigText} max-w-[10em]`}>Не боится царапин и стирания, печать не сползает</p>
+              <p className={`${bigText} max-w-[9.66em]`}>Не боится царапин и стирания, печать не сползает</p>
             </Block>
-            <Block label="Экология" grow="lg:flex-[334_1_0%]">
+            <Block label="Безопасность" grow="lg:flex-[334_1_0%]">
               <p className={`${bigText} max-w-[9em]`}>Негорючие чернила</p>
             </Block>
           </ul>
@@ -54,18 +54,18 @@ export function Numbers() {
             </Block>
             <Block label="Цвет" grow="lg:flex-[302_1_0%]" dark>
               <div className="flex flex-col gap-gap">
-                <p className="text-5xl leading-none font-bold whitespace-nowrap">
+                <p className="text-5xl font-bold whitespace-nowrap">
                   <span className="text-[#4ba5ef]">C</span>
                   <span className="text-[#9c0b4c]">M</span>
                   <span className="text-[#ddac2d]">Y</span>
                   <span className="text-[#696969]">K</span>
                   <span className="text-white">+W</span>
                 </p>
-                <p className="text-base leading-normal">Белый слой под цветом: яркость на тёмных и цветных стенах.</p>
+                <p className="text-base leading-6">Белый слой под цветом: яркость на тёмных и цветных стенах.</p>
               </div>
             </Block>
             <Block label="Изображения" grow="lg:flex-[438_1_0%]">
-              <p className={bigText}>Любая картинка из интернета, нейросети или логотип</p>
+              <p className={`${bigText} max-w-[11.25em]`}>Любая картинка из интернета, нейросети или логотип</p>
             </Block>
           </ul>
         </div>

@@ -1,3 +1,4 @@
+import heroPoster from '../../assets/images/hero-poster.webp'
 import heroVideo from '../../assets/video/hero.mp4'
 import { buttonClass } from '../ui/buttonClass'
 
@@ -6,6 +7,7 @@ export function Hero() {
     <section className="relative flex min-h-svh w-full items-end overflow-hidden text-white">
       <video
         src={heroVideo}
+        poster={heroPoster}
         autoPlay
         loop
         muted
