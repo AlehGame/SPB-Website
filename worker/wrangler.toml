@@ -1,0 +1,8 @@
+name = "coolprint-contact"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+SANITY_PROJECT_ID = "fy6hrt2t"
+SANITY_DATASET = "production"
+ALLOWED_ORIGINS = "https://alehgame.github.io,http://localhost:5173"

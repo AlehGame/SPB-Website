@@ -26,9 +26,22 @@ export default defineType({
     }),
     defineField({ name: 'task', title: 'Задача', type: 'text', rows: 4 }),
     defineField({ name: 'wallPhoto', title: 'Фото стены', type: 'image' }),
+    defineField({
+      name: 'processed',
+      title: 'Обработана',
+      type: 'boolean',
+      description: 'Отметьте, когда связались с клиентом',
+      initialValue: false,
+    }),
     defineField({ name: 'submittedAt', title: 'Дата отправки', type: 'datetime', readOnly: true }),
     defineField({ name: 'source', title: 'Страница отправки', type: 'url', readOnly: true }),
   ],
-  preview: { select: { title: 'name', subtitle: 'buildingType' } },
+  preview: {
+    select: { title: 'name', phone: 'phone', type: 'buildingType', processed: 'processed' },
+    prepare: ({ title, phone, type, processed }) => ({
+      title: `${processed ? '✓ ' : ''}${title}`,
+      subtitle: `${phone} · ${type}`,
+    }),
+  },
   orderings: [{ title: 'Сначала новые', name: 'submittedAtDesc', by: [{ field: 'submittedAt', direction: 'desc' }] }],
 })

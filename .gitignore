@@ -27,3 +27,7 @@ studio/node_modules
 studio/dist
 studio/.sanity
 studio/.env
+
+worker/node_modules
+worker/.wrangler
+worker/.dev.vars

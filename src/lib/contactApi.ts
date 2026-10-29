@@ -1,13 +1,9 @@
 import { toSanityDocument, type ContactFormValues } from './contactForm'
 
 /**
- * Отправка заявки. Единственное место, которое нужно изменить при подключении Sanity.
- *
- * Токен записи Sanity нельзя хранить в браузере, поэтому форма шлёт данные на свой endpoint
- * (serverless-функция: Vercel / Netlify / Cloudflare Worker). Адрес задаётся переменной
- * VITE_CONTACT_ENDPOINT. Функция на сервере:
- *   1. загружает файл wallPhoto в Sanity (client.assets.upload('image', file)),
- *   2. создаёт документ из поля `document` (client.create) со ссылкой на загруженное фото.
+ * Отправка заявки на Cloudflare Worker (папка worker/), который сохраняет её в Sanity.
+ * Токен записи Sanity нельзя хранить в браузере, поэтому форма шлёт данные на свой endpoint,
+ * адрес задаётся переменной VITE_CONTACT_ENDPOINT (см. README).
  *
  * Пока endpoint не задан, отправка имитируется, а данные выводятся в консоль (только в dev).
  */
