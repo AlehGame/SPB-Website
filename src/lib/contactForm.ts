@@ -53,7 +53,7 @@ export function validateContact(values: ContactFormValues): ContactFormErrors {
 }
 
 /**
- * Документ Sanity «contactRequest» (схема: docs/sanity-contact-request.schema.ts).
+ * Документ Sanity «contactRequest» (схема: studio/schemaTypes/contactRequest.ts).
  * Фото стены в документ не входит: файл загружается как asset на стороне сервера,
  * а в документе остаётся ссылка (wallPhoto → image).
  */

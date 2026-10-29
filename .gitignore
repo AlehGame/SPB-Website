@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+studio/node_modules
+studio/dist
+studio/.sanity
+studio/.env

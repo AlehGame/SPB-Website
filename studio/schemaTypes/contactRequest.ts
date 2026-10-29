@@ -1,7 +1,7 @@
 /**
  * Схема документа для Sanity Studio: заявки с формы на сайте.
- * Скопируйте файл в schemaTypes/ студии и добавьте в список типов (schema.types).
- * Эта папка не входит в сборку сайта.
+ * Подключён в studio/schemaTypes/index.ts.
+ * Студия лежит в папке studio/ и не входит в сборку сайта.
  *
  * Поля совпадают с SanityContactRequest из src/lib/contactForm.ts.
  * Поле wallPhoto заполняет серверная функция (см. src/lib/contactApi.ts).
