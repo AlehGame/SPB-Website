@@ -102,6 +102,11 @@ export default {
     if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors)
     if (!allowed.includes(origin)) return json({ error: 'Forbidden' }, 403)
 
+    if (!env.SANITY_WRITE_TOKEN) {
+      console.error('Секрет SANITY_WRITE_TOKEN не задан: wrangler secret put SANITY_WRITE_TOKEN')
+      return json({ error: 'Сервис не настроен' }, 500, cors)
+    }
+
     try {
       const form = await request.formData()
       const rawDocument = form.get('document')
