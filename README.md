@@ -42,4 +42,6 @@ npm run build    # production-сборка в dist/
 
 Письмо на почту (необязательно): зарегистрируйтесь на resend.com, создайте API key и выполните в `worker/`: `npx wrangler secret put RESEND_API_KEY` и `npx wrangler secret put NOTIFY_EMAIL` (почта, на которую зарегистрирован Resend), затем снова `npx wrangler deploy`. Письма идут с адреса onboarding@resend.dev; для своего домена его нужно подтвердить в Resend.
 
+Уведомление в Telegram (необязательно): в Telegram напишите @BotFather, команда `/newbot`, получите токен бота. Затем откройте чат с новым ботом и нажмите Start (для группы добавьте бота в группу и напишите там любое сообщение). Узнайте chat id: откройте `https://api.telegram.org/bot<токен>/getUpdates` и найдите `"chat":{"id":...}`. В `worker/` выполните `npx wrangler secret put TELEGRAM_BOT_TOKEN` и `npx wrangler secret put TELEGRAM_CHAT_ID`, затем `npx wrangler deploy`. Фото стены приходит в Telegram вместе с текстом заявки.
+
 Если сайт переедет на другой адрес, добавьте его в `ALLOWED_ORIGINS` в [wrangler.toml](worker/wrangler.toml). Тесты Worker: `npm test` в папке `worker/`.

@@ -5,7 +5,8 @@
  * Запрос: multipart/form-data с полями
  *   document  — JSON с полями заявки (name, phone, buildingType, task, source)
  *   wallPhoto — необязательное фото стены (png, jpeg, webp, до 10 МБ)
- * Дополнительно, если заданы RESEND_API_KEY и NOTIFY_EMAIL, отправляет уведомление на почту.
+ * Дополнительно отправляет уведомления: на почту (RESEND_API_KEY, NOTIFY_EMAIL)
+ * и в Telegram (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID), если эти секреты заданы.
  */
 
 export interface Env {
@@ -16,6 +17,8 @@ export interface Env {
   ALLOWED_ORIGINS: string
   RESEND_API_KEY?: string
   NOTIFY_EMAIL?: string
+  TELEGRAM_BOT_TOKEN?: string
+  TELEGRAM_CHAT_ID?: string
 }
 
 const API_VERSION = '2025-01-01'
@@ -63,15 +66,40 @@ async function sanityFetch(env: Env, path: string, init: RequestInit) {
   return (await response.json()) as { document?: { _id: string } }
 }
 
-async function notifyByEmail(env: Env, payload: ContactPayload, hasPhoto: boolean) {
-  if (!env.RESEND_API_KEY || !env.NOTIFY_EMAIL) return
-  const text = [
+const describe = (payload: ContactPayload, hasPhoto: boolean) =>
+  [
     `Имя: ${payload.name}`,
     `Телефон: ${payload.phone}`,
     `Кто: ${payload.buildingType}`,
     `Задача: ${payload.task || '—'}`,
-    `Фото стены: ${hasPhoto ? 'приложено (смотрите в Studio)' : 'нет'}`,
+    `Фото стены: ${hasPhoto ? 'приложено' : 'нет'}`,
   ].join('\n')
+
+async function notifyByTelegram(env: Env, payload: ContactPayload, file: File | null) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return
+  const text = `Новая заявка с сайта\n\n${describe(payload, Boolean(file))}`
+  const body = new FormData()
+  body.append('chat_id', env.TELEGRAM_CHAT_ID)
+  // Фото уходит с подписью (лимит подписи 1024 символа), без фото — обычное сообщение
+  if (file) {
+    body.append('photo', file, file.name || 'wall-photo')
+    body.append('caption', text.slice(0, 1024))
+  } else {
+    body.append('text', text)
+  }
+  const response = await fetch(
+    `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${file ? 'sendPhoto' : 'sendMessage'}`,
+    {
+      method: 'POST',
+      body,
+    },
+  )
+  if (!response.ok) console.error('Telegram:', response.status, await response.text())
+}
+
+async function notifyByEmail(env: Env, payload: ContactPayload, hasPhoto: boolean) {
+  if (!env.RESEND_API_KEY || !env.NOTIFY_EMAIL) return
+  const text = describe(payload, hasPhoto).replace('приложено', 'приложено (смотрите в Studio)')
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
@@ -147,8 +175,12 @@ export default {
         }),
       })
 
-      const notification = notifyByEmail(env, payload, Boolean(file)).catch((error) => console.error(error))
-      ctx?.waitUntil(notification)
+      // Уведомления не должны ломать ответ: заявка уже сохранена в Sanity
+      const notifications = Promise.all([
+        notifyByEmail(env, payload, Boolean(file)),
+        notifyByTelegram(env, payload, file),
+      ]).catch((error) => console.error(error))
+      ctx?.waitUntil(notifications)
       return json({ ok: true }, 200, cors)
     } catch (error) {
       console.error(error)

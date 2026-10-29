@@ -50,6 +50,30 @@ test('saves a request and uploads the photo', async () => {
   assert.equal((calls[1].init.headers as Record<string, string>).Authorization, 'Bearer secret')
 })
 
+test('sends Telegram and email notifications when configured', async () => {
+  const urls: string[] = []
+  globalThis.fetch = (async (url: string) => {
+    urls.push(url)
+    return new Response(JSON.stringify({}), { status: 200 })
+  }) as typeof fetch
+  const pending: Promise<unknown>[] = []
+  const notifyEnv: Env = {
+    ...env,
+    TELEGRAM_BOT_TOKEN: 'bot',
+    TELEGRAM_CHAT_ID: '42',
+    RESEND_API_KEY: 'key',
+    NOTIFY_EMAIL: 'a@b.c',
+  }
+  const body = new FormData()
+  body.append('document', JSON.stringify(valid))
+  const request = new Request('https://worker.example', { method: 'POST', body, headers: { Origin: ORIGIN } })
+  const response = await worker.fetch(request, notifyEnv, { waitUntil: (promise) => void pending.push(promise) })
+  await Promise.all(pending)
+  assert.equal(response.status, 200)
+  assert.ok(urls.some((url) => url === 'https://api.telegram.org/botbot/sendMessage'))
+  assert.ok(urls.some((url) => url === 'https://api.resend.com/emails'))
+})
+
 test('rejects invalid data without calling Sanity', async () => {
   globalThis.fetch = (async () => assert.fail('must not call Sanity')) as typeof fetch
   for (const bad of [
