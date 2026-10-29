@@ -22,15 +22,16 @@ export const FALLBACK_PROJECTS: Project[] = [
   { id: '5', image: project5, name: 'Ресторан', place: 'Санкт-Петербург', area: 18.3 },
 ]
 
-const projectId: string | undefined = import.meta.env.VITE_SANITY_PROJECT_ID
+// Project ID не секрет; значение по умолчанию страхует от пустой переменной окружения при сборке
+const projectId: string = import.meta.env.VITE_SANITY_PROJECT_ID || 'fy6hrt2t'
 const dataset: string = import.meta.env.VITE_SANITY_DATASET || 'production'
 const API_VERSION = '2025-01-01'
 
 // Ширина картинки с запасом под retina: карточка 283px
 const IMAGE_PARAMS = '?w=600&auto=format'
 
-// Сначала проекты с заданным порядком, остальные — новые первыми
-const QUERY = `*[_type == "project" && defined(image.asset)] | order(coalesce(order, 999999) asc, _createdAt desc) {
+// Проекты без поля «Порядок» (новые) идут первыми, затем по возрастанию порядка
+const QUERY = `*[_type == "project" && defined(image.asset)] | order(coalesce(order, -1) asc, _createdAt desc) {
   _id, title, location, area, "image": image.asset->url
 }`
 
