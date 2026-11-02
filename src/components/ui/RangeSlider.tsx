@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, type CSSProperties } from 'react'
 
 interface RangeSliderProps {
   label: string
@@ -30,7 +30,7 @@ export function RangeSlider({ label, valueText, min, max, step, value, onChange 
         max={max}
         step={step}
         value={value}
-        style={{ '--p': `${progress}%` } as React.CSSProperties}
+        style={{ '--p': `${progress}%` } as CSSProperties}
         onChange={(event) => onChange(Number(event.target.value))}
       />
     </div>
