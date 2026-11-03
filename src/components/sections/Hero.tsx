@@ -33,7 +33,7 @@ export function Hero() {
             Попробовать услугу
           </a>
           <div className="flex gap-4 leading-6 whitespace-nowrap sm:flex-col sm:items-end sm:gap-1">
-            <p className="text-xl font-bold">От 2500₽/м2</p>
+            <p className="text-xl font-bold">От 3000₽/м2</p>
             <p className="text-base font-medium sm:text-sm">Чем больше, тем дешевле.</p>
           </div>
         </div>
