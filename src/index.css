@@ -137,6 +137,11 @@
   .range:focus-visible {
     outline: none;
   }
+  /* Линия из точек (4px, шаг 8px) для строки «от 50 м²» в списке цен */
+  .dots {
+    background: radial-gradient(circle, var(--color-black) calc(2 * var(--u)), transparent calc(2.5 * var(--u))) 0 0 /
+      calc(8 * var(--u)) 100% repeat-x;
+  }
   .range:focus-visible::-webkit-slider-thumb,
   .range:focus-visible::-moz-range-thumb {
     outline: 2px solid var(--color-black);

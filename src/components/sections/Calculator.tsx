@@ -6,9 +6,11 @@ import {
   formatArea,
   formatHours,
   formatMeters,
+  formatPrice,
   formatPriceRange,
   formatTierPrice,
   HEIGHT_RANGE,
+  MIN_ORDER,
   PRICE_TIERS,
   WIDTH_RANGE,
 } from '../../lib/pricing'
@@ -62,14 +64,13 @@ export function Calculator() {
                 onChange={setWidth}
               />
               <RangeSlider
-                label="Высота (до 3 м / за проход)"
+                label="Высота (до 4,8 м / за проход)"
                 valueText={formatMeters(height)}
                 {...HEIGHT_RANGE}
                 value={height}
                 onChange={setHeight}
               />
             </div>
-
             <div className="flex flex-col gap-4">
               <p className="text-sm font-bold text-black">Загрузите фото стены и изображение</p>
               <div className="grid grid-cols-2 gap-1">
@@ -99,9 +100,10 @@ export function Calculator() {
                   </div>
                 ))}
               </div>
-              <p className="text-center text-xs font-medium text-body">Формат фото: png, jpeg, webp</p>
+              <p className="text-center text-xs font-medium text-body">
+                Формат фото: <b className="font-bold text-black">png, jpeg, webp</b>
+              </p>
             </div>
-
             <div className="flex flex-col gap-1 rounded-card bg-black px-4 pt-3 pb-4.25 text-white" aria-live="polite">
               <p className="text-sm leading-6 font-medium">Ориентировочно</p>
               <p className={`${isRange ? 'text-2xl' : 'text-3xl'} leading-tight font-bold`}>{headline}</p>
@@ -111,26 +113,34 @@ export function Calculator() {
                 <span>Печать: {formatHours(quote.hoursMin, quote.hoursMax)}</span>
               </p>
             </div>
-
             <ul className="flex flex-col gap-3 text-xs leading-4 text-black">
               {PRICE_TIERS.map((tier, i) => (
                 <li
                   key={tier.label}
-                  className={`grid grid-cols-[calc(var(--spacing)*24.25)_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
+                  className={`grid grid-cols-[calc(var(--u)*97)_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
                 >
-                  <span>
-                    {tier.label}
-                    {tier.note && <span className="block text-[10px] leading-3 font-normal">{tier.note}</span>}
-                  </span>
-                  <span aria-hidden className="h-1 rounded-full bg-black" style={{ width: `${tier.bar}%` }} />
-                  <span className="pl-6">{formatTierPrice(tier.price)}</span>
+                  <span>{tier.label}</span>
+                  {tier.bar ? (
+                    <span
+                      aria-hidden
+                      className="h-0.5 rounded-full bg-black"
+                      style={{ width: `calc(var(--u) * ${tier.bar})` }}
+                    />
+                  ) : (
+                    <span aria-hidden className="h-1 w-[calc(var(--u)*132)] dots" />
+                  )}
+                  <span>{formatTierPrice(tier.price)}</span>
                 </li>
               ))}
             </ul>
-
-            <a href="#contacts" className={`${buttonClass('fill')} w-full`}>
-              Отправить расчет
-            </a>
+            <div className="flex flex-col items-center gap-4">
+              <p className="text-xs text-body">
+                Минимальный заказ: <b className="font-bold text-black">От {formatPrice(MIN_ORDER)}</b>
+              </p>
+              <a href="#contacts" className={`${buttonClass('fill')} w-full`}>
+                Отправить расчет
+              </a>
+            </div>{' '}
           </div>
         </div>
       </div>
