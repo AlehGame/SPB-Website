@@ -1,4 +1,4 @@
-import step1 from '../../assets/images/how-1.webp'
+﻿import step1 from '../../assets/images/how-1.webp'
 import step2 from '../../assets/images/how-2.webp'
 import step3 from '../../assets/images/how-3.webp'
 import step4 from '../../assets/images/how-4.webp'
@@ -28,7 +28,7 @@ const steps = [
     image: step4,
     bg: 'bg-sky',
     title: 'Печать изображения на стену',
-    text: 'Принтер наносит изображение слой за слоем, краска сохнет под УФ-лампой. Скорость нанесения 1,5–6 м²/ч, высота до 3 м за проход.',
+    text: 'Принтер наносит слой за слоем, краска сохнет под УФ-лампой. Скорость нанесения 1,5–6 м²/ч, высота до 4.8 м за проход.',
   },
   {
     image: step5,

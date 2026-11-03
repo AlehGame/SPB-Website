@@ -1,18 +1,20 @@
-import type { ReactNode } from 'react'
+﻿import type { ReactNode } from 'react'
 
 interface BlockProps {
   label: string
   /** Ширина блока в ряду (доля), по макету */
   grow: string
   dark?: boolean
+  /** Текст сразу под подписью, а не прижат к низу блока (на десктопе) */
+  start?: boolean
   className?: string
   children: ReactNode
 }
 
-function Block({ label, grow, dark = false, className = '', children }: BlockProps) {
+function Block({ label, grow, dark = false, start = false, className = '', children }: BlockProps) {
   return (
     <li
-      className={`flex flex-col justify-between gap-12 rounded-card p-gap lg:min-h-62.25 lg:gap-gap ${grow} ${
+      className={`flex flex-col justify-between gap-12 rounded-card p-gap lg:min-h-62.25 ${start ? 'lg:justify-start lg:gap-23.5' : 'lg:gap-gap'} ${grow} ${
         dark ? 'bg-black text-white' : 'bg-white text-black'
       } ${className}`}
     >
@@ -24,7 +26,7 @@ function Block({ label, grow, dark = false, className = '', children }: BlockPro
   )
 }
 
-const bigText = 'text-2xl leading-8 font-bold md:text-3xl md:leading-10'
+const bigText = 'text-2xl leading-8 font-bold'
 
 export function Numbers() {
   return (
@@ -43,11 +45,14 @@ export function Numbers() {
                 <p className="text-base leading-6">По данным производителя чернил</p>
               </div>
             </Block>
-            <Block label="Стойкость" grow="lg:flex-[491_1_0%]">
-              <p className={`${bigText} lg:max-w-[9.66em]`}>Не боится царапин и стирания, печать не сползает</p>
+            <Block label="Гарантия" grow="lg:flex-[491_1_0%]">
+              <p className={bigText}>
+                Печать устойчива к царапанию и истиранию - не сходит со стены. Подтверждено{' '}
+                <span className="bg-brand bg-clip-text text-transparent">6 годами</span> практики.
+              </p>
             </Block>
-            <Block label="Безопасность" grow="lg:flex-[334_1_0%]">
-              <p className={`${bigText} lg:max-w-[9em]`}>Негорючие чернила</p>
+            <Block label="Материалы" grow="lg:flex-[334_1_0%]" start>
+              <p className={bigText}>Негорючие чернила</p>
             </Block>
           </ul>
 
@@ -68,7 +73,7 @@ export function Numbers() {
               </div>
             </Block>
             <Block label="Изображения" grow="lg:flex-[438_1_0%]" className="pr-13.5">
-              <p className={bigText}>Любая картинка из интернета, нейросети или логотип</p>
+              <p className={bigText}>Печатаем любые картинки из интернета, нейросети или логотипы.</p>
             </Block>
           </ul>
         </div>
