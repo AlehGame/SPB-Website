@@ -1,6 +1,4 @@
-import { MorphIcon, type MorphIconProps } from 'morphicons/react'
-
-export type { IconInput } from 'morphicons/react'
+﻿import { MorphIcon, type MorphIconProps } from 'morphicons/react'
 
 // Иконки — данные Lucide (import { Phone } from 'lucide'), рендерит morphicons.
 // Размер 20 макетных px масштабируется через --u (CSS перекрывает атрибуты width/height).

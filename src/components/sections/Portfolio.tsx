@@ -23,6 +23,8 @@ function Track({ projects }: { projects: Project[] }) {
                   alt={copy === 0 ? name : ''}
                   width={283}
                   height={tall ? 390 : 358}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                   className={`w-full object-cover ${tall ? 'h-143 md:h-97.5' : 'h-131.25 md:h-89.5'}`}
                 />

@@ -11,7 +11,11 @@ export function ScrollWords() {
       {/* Две одинаковые копии: на -50% трек возвращается в исходную точку — цикл без шва */}
       <div className="flex w-max animate-marquee-left will-change-transform">
         {[0, 1].map((copy) => (
-          <ul key={copy} aria-hidden={copy === 1 || undefined} className="flex shrink-0 items-center gap-words pr-words">
+          <ul
+            key={copy}
+            aria-hidden={copy === 1 || undefined}
+            className="flex shrink-0 items-center gap-words pr-words"
+          >
             {items.map((word, i) => (
               <li key={i} className="flex items-center gap-words">
                 <span className="text-2xl font-bold whitespace-nowrap">{word}</span>

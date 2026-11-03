@@ -20,7 +20,13 @@ export function UIKit() {
               <Button variant={variant} size={size}>
                 Без иконок
               </Button>
-              <Button variant={variant} size={size} disabled leftIcon={<Icon icon={Phone} />} rightIcon={<Icon icon={Send} />}>
+              <Button
+                variant={variant}
+                size={size}
+                disabled
+                leftIcon={<Icon icon={Phone} />}
+                rightIcon={<Icon icon={Send} />}
+              >
                 Disabled
               </Button>
             </div>
@@ -41,9 +47,29 @@ export function UIKit() {
       <section className="flex flex-col gap-4 rounded-card bg-black p-card">
         <h2 className="text-xl font-bold text-white">Input field</h2>
         <div className="grid max-w-112 gap-4">
-          <InputField label="Label" placeholder="Placeholder" helper="Helper text" leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />
-          <InputField label="Error" placeholder="Placeholder" helper="Helper text" error leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />
-          <InputField label="Disabled" placeholder="Placeholder" helper="Helper text" disabled leftIcon={<Icon icon={Upload} />} rightIcon={<Icon icon={ChevronDown} />} />
+          <InputField
+            label="Label"
+            placeholder="Placeholder"
+            helper="Helper text"
+            leftIcon={<Icon icon={Upload} />}
+            rightIcon={<Icon icon={ChevronDown} />}
+          />
+          <InputField
+            label="Error"
+            placeholder="Placeholder"
+            helper="Helper text"
+            error
+            leftIcon={<Icon icon={Upload} />}
+            rightIcon={<Icon icon={ChevronDown} />}
+          />
+          <InputField
+            label="Disabled"
+            placeholder="Placeholder"
+            helper="Helper text"
+            disabled
+            leftIcon={<Icon icon={Upload} />}
+            rightIcon={<Icon icon={ChevronDown} />}
+          />
         </div>
       </section>
     </div>

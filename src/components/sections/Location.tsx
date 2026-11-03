@@ -27,6 +27,8 @@ export function Location() {
             alt="Карта: основная локация — Санкт-Петербург; выезды — Псков, Новгород, Мурманск и Москва"
             width={716}
             height={510}
+            loading="lazy"
+            decoding="async"
             className="size-full object-cover"
           />
         </div>

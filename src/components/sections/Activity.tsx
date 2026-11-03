@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import image1 from '../../assets/images/activity-1.webp'
@@ -79,8 +79,7 @@ export function Activity() {
       }
       // Уходящий заголовок поднимается вверх за верхний край окна,
       // входящий поднимается снизу из-за нижнего края
-      const exit = (el: HTMLElement, start: number) =>
-        tl.to(el, { y: () => -win.offsetHeight, duration: 0.6 }, start)
+      const exit = (el: HTMLElement, start: number) => tl.to(el, { y: () => -win.offsetHeight, duration: 0.6 }, start)
       const enter = (el: HTMLElement, start: number) =>
         tl.fromTo(el, { y: () => el.offsetHeight }, { y: 0, duration: 0.45 }, start)
 
@@ -106,7 +105,14 @@ export function Activity() {
     <section ref={sectionRef} id="audience" data-pinned className="relative h-svh w-full overflow-hidden bg-black">
       {/* Фон секции на всю ширину экрана: фото 1 внизу, фото 2 и 3 открываются поверх радиальной маской */}
       <div className="absolute inset-0">
-        <img src={image1} alt="" className="size-full object-cover" />
+        <img
+          src={image1}
+          alt={`Для кого: ${titles[0].title}`}
+          width={1920}
+          height={1200}
+          decoding="async"
+          className="size-full object-cover"
+        />
         {overlay}
       </div>
       {[image2, image3].map((src, i) => (
@@ -118,14 +124,24 @@ export function Activity() {
           className="absolute inset-0"
           style={maskStyle}
         >
-          <img src={src} alt="" className="size-full object-cover" />
+          <img
+            src={src}
+            alt={`Для кого: ${titles[i + 1].title}`}
+            width={1920}
+            height={1200}
+            loading="lazy"
+            decoding="async"
+            className="size-full object-cover"
+          />
           {overlay}
         </div>
       ))}
 
       {/* Контейнер контента: максимум 1920px */}
       <div className="relative mx-auto h-full max-w-[1920px]">
-        <p className="absolute top-47.5 left-page md:top-[calc(var(--header-h)+var(--spacing-gap))] text-2xl leading-8 font-bold text-white uppercase">Для кого</p>
+        <p className="absolute top-47.5 left-page md:top-[calc(var(--header-h)+var(--spacing-gap))] text-2xl leading-8 font-bold text-white uppercase">
+          Для кого
+        </p>
 
         {/* Окно-маска высотой в 4 строки: заголовки скользят внутри и обрезаются по краям */}
         <div

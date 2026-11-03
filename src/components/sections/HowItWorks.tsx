@@ -58,7 +58,11 @@ export function HowItWorks() {
             <p className="text-base leading-6 font-extrabold text-body uppercase">Шаг {i + 1}.</p>
             <img
               src={image}
-              alt=""
+              alt={title}
+              width={524}
+              height={402}
+              loading="lazy"
+              decoding="async"
               draggable={false}
               className="aspect-[524/402] w-full object-contain"
             />

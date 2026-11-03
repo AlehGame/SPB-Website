@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useInViewOnce } from '../../hooks/useInViewOnce'
 import { useSanityList } from '../../hooks/useSanityList'
 import { FALLBACK_REVIEWS, fetchReviews, type Review } from '../../lib/reviews'
 import { Marquee } from '../ui/Marquee'
@@ -46,7 +47,7 @@ function VideoCard({ src, title, active, hidden, onToggle, onEnded }: VideoCardP
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         onEnded={onEnded}
       />
       <button
@@ -112,13 +113,22 @@ function Track({ reviews }: { reviews: Review[] }) {
 
 export function Reviews() {
   const reviews = useSanityList(fetchReviews, FALLBACK_REVIEWS, 'reviews')
+  // Видео (3+ МБ) начинаем грузить только когда секция приблизилась к экрану
+  const [sectionRef, nearScreen] = useInViewOnce<HTMLElement>()
 
   return (
-    <section id="reviews" className="flex w-full flex-col gap-block overflow-hidden bg-bg-1 py-section">
+    <section
+      ref={sectionRef}
+      id="reviews"
+      className="flex w-full flex-col gap-block overflow-hidden bg-bg-1 py-section"
+    >
       <div className="mx-auto w-full max-w-[1920px] px-page">
         <h2 className="text-hero leading-none font-extrabold text-black">Клиенты говорят</h2>
       </div>
-      {reviews && reviews.length > 0 && <Track reviews={reviews} />}
+      {/* Высота резервируется заранее, чтобы появление видео не сдвигало страницу */}
+      <div className="min-h-147 md:min-h-122">
+        {nearScreen && reviews && reviews.length > 0 && <Track reviews={reviews} />}
+      </div>
     </section>
   )
 }

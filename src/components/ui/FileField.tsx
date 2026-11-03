@@ -12,7 +12,16 @@ type FileFieldProps = Pick<FieldProps, 'label' | 'helper' | 'error' | 'className
 }
 
 // Выбор файла: сам input скрыт, кликабельна вся «таблетка» (label)
-export function FileField({ label, helper, error = false, className, file, placeholder, onFileChange, name }: FileFieldProps) {
+export function FileField({
+  label,
+  helper,
+  error = false,
+  className,
+  file,
+  placeholder,
+  onFileChange,
+  name,
+}: FileFieldProps) {
   const id = useId()
 
   return (

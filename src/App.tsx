@@ -1,3 +1,4 @@
+﻿import { lazy, Suspense } from 'react'
 import { Activity } from './components/sections/Activity'
 import { Additional } from './components/sections/Additional'
 import { ArtistPrinter } from './components/sections/ArtistPrinter'
@@ -13,13 +14,23 @@ import { Numbers } from './components/sections/Numbers'
 import { Portfolio } from './components/sections/Portfolio'
 import { Reviews } from './components/sections/Reviews'
 import { ScrollWords } from './components/sections/ScrollWords'
-import { UIKit } from './components/UIKit'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+
+// Витрина UI-компонентов (/#ui-kit) доступна только в dev и не попадает в продакшен-сборку
+const UIKit = import.meta.env.DEV
+  ? lazy(() => import('./components/UIKit').then(({ UIKit }) => ({ default: UIKit })))
+  : null
 
 export default function App() {
   useSmoothScroll()
 
-  if (window.location.hash === '#ui-kit') return <UIKit />
+  if (UIKit && window.location.hash === '#ui-kit') {
+    return (
+      <Suspense>
+        <UIKit />
+      </Suspense>
+    )
+  }
 
   return (
     <>

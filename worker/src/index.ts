@@ -157,7 +157,8 @@ export default {
         wallPhoto = { _type: 'image', asset: { _type: 'reference', _ref: document?._id } }
       }
 
-      await sanityFetch(env, `/data/mutate/${env.SANITY_DATASET}`, {
+      // visibility=async: не ждём индексации документа, ответ приходит быстрее
+      await sanityFetch(env, `/data/mutate/${env.SANITY_DATASET}?visibility=async`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

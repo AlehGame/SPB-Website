@@ -1,6 +1,6 @@
-# Cool Print SPB
+﻿# Cool Print SPB
 
-Верстка сайта по макету Figma. Стек: Vite + React + TypeScript, Tailwind CSS, GSAP + ScrollTrigger + Lenis, Swiper.
+Верстка сайта по макету Figma. Стек: Vite + React + TypeScript, Tailwind CSS, GSAP + ScrollTrigger + Lenis.
 
 ## Запуск
 
@@ -45,3 +45,12 @@ npm run build    # production-сборка в dist/
 Уведомление в Telegram (необязательно): в Telegram напишите @BotFather, команда `/newbot`, получите токен бота. Затем откройте чат с новым ботом и нажмите Start (для группы добавьте бота в группу и напишите там любое сообщение). Узнайте chat id: откройте `https://api.telegram.org/bot<токен>/getUpdates` и найдите `"chat":{"id":...}`. В `worker/` выполните `npx wrangler secret put TELEGRAM_BOT_TOKEN` и `npx wrangler secret put TELEGRAM_CHAT_ID`, затем `npx wrangler deploy`. Фото стены приходит в Telegram вместе с текстом заявки.
 
 Если сайт переедет на другой адрес, добавьте его в `ALLOWED_ORIGINS` в [wrangler.toml](worker/wrangler.toml). Тесты Worker: `npm test` в папке `worker/`.
+
+## SEO
+
+Адрес сайта задаётся в `.env`: `VITE_SITE_URL` (со слэшем в конце). Из него берутся canonical, Open Graph, `robots.txt` и `sitemap.xml` (генерируются при сборке, см. [vite.config.ts](vite.config.ts)). Мета-теги и микроразметка LocalBusiness лежат в [index.html](index.html), FAQPage строится из вопросов в секции «Частые вопросы».
+
+Когда у сайта появится свой домен:
+1. Обновите `VITE_SITE_URL` в `.env` и добавьте домен в `ALLOWED_ORIGINS` в [worker/wrangler.toml](worker/wrangler.toml) (затем `npx wrangler deploy`).
+2. Подтвердите сайт в Яндекс Вебмастере и Google Search Console (мета-тег подтверждения добавляется в `<head>` в `index.html`) и отправьте `sitemap.xml`.
+3. `robots.txt` учитывается поисковиками только в корне домена, на `github.io/<репозиторий>/` он не работает.

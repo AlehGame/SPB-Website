@@ -12,9 +12,9 @@ export const BUILDING_TYPES = [
   'Другое',
 ] as const
 
-export type BuildingType = (typeof BUILDING_TYPES)[number]
+type BuildingType = (typeof BUILDING_TYPES)[number]
 
-export const MAX_PHOTO_SIZE = 10 * 1024 * 1024 // 10 МБ
+const MAX_PHOTO_SIZE = 10 * 1024 * 1024 // 10 МБ
 export const MAX_TASK_LENGTH = 2000
 
 export interface ContactFormValues {

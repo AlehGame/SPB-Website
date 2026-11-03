@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+﻿import { useCallback, useState } from 'react'
 import { Menu, Phone } from 'lucide'
 import logo from '../../assets/icons/logo.svg'
 import { useActiveSection } from '../../hooks/useActiveSection'
@@ -30,7 +30,7 @@ export function Header() {
           <img src={logo} alt="Cool Print" width={51} height={30} className="h-7.5 w-12.75" />
         </a>
 
-        <nav className="hidden items-center gap-2 lg:flex">
+        <nav aria-label="Основная навигация" className="hidden items-center gap-2 lg:flex">
           {links.map(({ label, href }) => (
             <MenuLink key={href} href={href} active={href === `#${activeId}`}>
               {label}

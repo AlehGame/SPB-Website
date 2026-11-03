@@ -2,12 +2,120 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cool Print SPB</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#141414" />
+
+    <title>Печать на стенах в Санкт-Петербурге — Cool Print SPB</title>
+    <meta
+      name="description"
+      content="Нанесём любую картинку на стену: УФ-печать 300 DPI, высота до 4.8 м за проход, для школ, детских садов, кафе, офисов и квартир в Санкт-Петербурге. Расчёт цены онлайн."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="%VITE_SITE_URL%" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Cool Print SPB" />
+    <meta property="og:title" content="Печать на стенах в Санкт-Петербурге — Cool Print SPB" />
+    <meta
+      property="og:description"
+      content="Любая картинка прямо у вас на стене: УФ-печать для школ, садов, кафе, офисов и квартир. Цена и время печати считаются онлайн."
+    />
+    <meta property="og:url" content="%VITE_SITE_URL%" />
+    <meta property="og:image" content="%VITE_SITE_URL%og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cool Print: печать изображений на стенах" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Ускоряем первые запросы: данные и картинки из Sanity, отправка формы -->
+    <link rel="preconnect" href="https://fy6hrt2t.apicdn.sanity.io" crossorigin />
+    <link rel="preconnect" href="https://cdn.sanity.io" />
+    <link rel="preconnect" href="%VITE_CONTACT_ENDPOINT%" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "%VITE_SITE_URL%#business",
+        "name": "Cool Print SPB",
+        "description": "Печать любых изображений на стенах для школ, детских садов, кафе, офисов и квартир в Санкт-Петербурге.",
+        "url": "%VITE_SITE_URL%",
+        "image": "%VITE_SITE_URL%og-image.jpg",
+        "telephone": "+79213633647",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Санкт-Петербург",
+          "addressCountry": "RU"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Санкт-Петербург" },
+          { "@type": "City", "name": "Псков" },
+          { "@type": "City", "name": "Великий Новгород" },
+          { "@type": "City", "name": "Мурманск" },
+          { "@type": "City", "name": "Москва" }
+        ],
+        "sameAs": [
+          "https://t.me/paveeel_TyT",
+          "https://vk.ru/coolprintspb",
+          "https://www.instagram.com/pavel_cool_print"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Печать на стенах",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Печать на стене до 2 м²",
+              "priceCurrency": "RUB",
+              "price": "16000",
+              "description": "Минимальный заказ"
+            },
+            {
+              "@type": "Offer",
+              "name": "Печать на стене от 2 до 5 м²",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "priceCurrency": "RUB",
+                "minPrice": 5000,
+                "maxPrice": 8000,
+                "unitText": "м²"
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Печать на стене от 5 до 10 м²",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "priceCurrency": "RUB",
+                "minPrice": 4500,
+                "maxPrice": 6000,
+                "unitText": "м²"
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Печать на стене от 10 до 50 м²",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "priceCurrency": "RUB",
+                "minPrice": 4000,
+                "maxPrice": 5000,
+                "unitText": "м²"
+              }
+            }
+          ]
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      Cool Print SPB: печать любых изображений на стенах в Санкт-Петербурге. Включите JavaScript, чтобы увидеть сайт.
+      Телефон: +7 921 363-36-47.
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
