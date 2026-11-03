@@ -15,8 +15,8 @@ import { Button } from '../ui/Button'
 import { buttonClass } from '../ui/buttonClass'
 import { RangeSlider } from '../ui/RangeSlider'
 import { Toast } from '../ui/Toast'
-import { WallPreview } from '../ui/WallPreview'
 import { UploadIcon } from '../ui/UploadIcon'
+import { WallPreview } from '../ui/WallPreview'
 
 export function Calculator() {
   const [width, setWidth] = useState(2.5)
@@ -39,10 +39,7 @@ export function Calculator() {
         </div>
 
         <div className="grid grid-cols-1 gap-gap lg:grid-cols-[minmax(0,1fr)_calc(var(--spacing)*96)]">
-          {/* Визуализатор: слой «wall image» (фото стены) и слой «image for wall» (изображение для печати) */}
-          <div className="flex flex-col rounded-card bg-white p-10 max-md:aspect-[361/291] md:p-page">
-            <WallPreview width={width} height={height} wallUrl={wall.url} printUrl={print.url} />
-          </div>
+          <WallPreview width={width} height={height} wallUrl={wall.url} printUrl={print.url} />
 
           {/* Калькулятор */}
           <div className="flex flex-col gap-6 rounded-card bg-white px-4 py-6 md:p-6">
