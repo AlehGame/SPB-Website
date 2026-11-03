@@ -15,64 +15,8 @@ import { Button } from '../ui/Button'
 import { buttonClass } from '../ui/buttonClass'
 import { RangeSlider } from '../ui/RangeSlider'
 import { Toast } from '../ui/Toast'
+import { WallPreview } from '../ui/WallPreview'
 import { UploadIcon } from '../ui/UploadIcon'
-
-// Пропорции стены-заглушки, пока фото не загружено
-const DEFAULT_WALL_RATIO = 712 / 524
-
-// Доля стены, которую занимает изображение: от 20% (минимум на ползунке) до 100% (максимум)
-const printScale = (value: number, { min, max }: { min: number; max: number }) =>
-  0.2 + (0.8 * (value - min)) / (max - min)
-
-interface WallPreviewProps {
-  width: number
-  height: number
-  wallUrl: string | null
-  printUrl: string | null
-}
-
-// Стена — неподвижный фон: её блок повторяет пропорции загруженного фото и целиком вписывается в область
-// визуализатора (единицы контейнера cqw/cqh), без обрезки и искажений. Слой с изображением для печати
-// меняет размер относительно стены по значениям ползунков.
-function WallPreview({ width, height, wallUrl, printUrl }: WallPreviewProps) {
-  const [loaded, setLoaded] = useState<{ url: string; ratio: number } | null>(null)
-  const ratio = loaded && loaded.url === wallUrl ? loaded.ratio : DEFAULT_WALL_RATIO
-
-  return (
-    <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-bg-1 md:aspect-[712/524] md:min-h-64 lg:aspect-auto [container-type:size]">
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-bg-2"
-        style={{ aspectRatio: ratio, width: `min(100cqw, calc(100cqh * ${ratio}))` }}
-      >
-        {wallUrl && (
-          <img
-            src={wallUrl}
-            alt="Фото вашей стены"
-            className="absolute inset-0 size-full"
-            onLoad={({ currentTarget: { naturalWidth, naturalHeight } }) =>
-              setLoaded({ url: wallUrl, ratio: naturalWidth / naturalHeight })
-            }
-          />
-        )}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-[width,height] duration-150 ease-out"
-          style={{
-            width: `${printScale(width, WIDTH_RANGE) * 100}%`,
-            height: `${printScale(height, HEIGHT_RANGE) * 100}%`,
-          }}
-        >
-          {printUrl ? (
-            <img src={printUrl} alt="Изображение для печати" className="size-full object-contain" />
-          ) : (
-            <div className="flex size-full items-center justify-center border border-dashed border-line bg-bg-2/80 p-2 text-center text-sm text-body">
-              Изображение для печати
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export function Calculator() {
   const [width, setWidth] = useState(2.5)
