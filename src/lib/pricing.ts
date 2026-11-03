@@ -22,20 +22,14 @@ const SPEED_SLOW = 1.5
 export const WIDTH_RANGE = { min: 1, max: 100, step: 0.5 }
 export const HEIGHT_RANGE = { min: 0.5, max: 4.8, step: 0.1 }
 
-export function getTierIndex(area: number) {
-  return PRICE_TIERS.findIndex((tier) => area <= tier.max)
-}
-
 // Округляем итог до сотен рублей
 const roundPrice = (n: number) => Math.round(n / 100) * 100
 
 export function calcQuote(width: number, height: number) {
   const area = Math.round(width * height * 100) / 100
-  const tierIndex = getTierIndex(area)
-  const { price } = PRICE_TIERS[tierIndex]
+  const { price } = PRICE_TIERS.find((tier) => area <= tier.max) ?? PRICE_TIERS[PRICE_TIERS.length - 1]
   return {
     area,
-    tierIndex,
     price,
     // Итоговая сумма «от» и «до»; null, если расчёт индивидуальный
     total:

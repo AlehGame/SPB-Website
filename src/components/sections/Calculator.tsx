@@ -114,20 +114,18 @@ export function Calculator() {
               </p>
             </div>
             <ul className="flex flex-col gap-3 text-xs leading-4 text-black">
-              {PRICE_TIERS.map((tier, i) => (
-                <li
-                  key={tier.label}
-                  className={`grid grid-cols-[calc(var(--u)*97)_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
-                >
+              {PRICE_TIERS.map((tier) => (
+                <li key={tier.label} className="grid grid-cols-[calc(var(--u)*97)_1fr_auto] items-center">
                   <span>{tier.label}</span>
+                  {/* Линии одной толщины в целых пикселях, иначе при дробном масштабе они рендерятся по-разному */}
                   {tier.bar ? (
                     <span
                       aria-hidden
-                      className="h-0.5 rounded-full bg-black"
+                      className="h-[4px] rounded-full bg-black"
                       style={{ width: `calc(var(--u) * ${tier.bar})` }}
                     />
                   ) : (
-                    <span aria-hidden className="h-1 w-[calc(var(--u)*132)] dots" />
+                    <span aria-hidden className="dots h-[4px] w-[calc(var(--u)*132)]" />
                   )}
                   <span>{formatTierPrice(tier.price)}</span>
                 </li>
