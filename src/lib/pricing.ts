@@ -1,10 +1,16 @@
-// Тарифы: цена за м² зависит от общей площади стены
-export const PRICE_TIERS = [
-  { label: 'До 10 м²', max: 10, rate: 3500, bar: 100 },
-  { label: '10–30 м²', max: 30, rate: 3000, bar: 87 },
-  { label: '30–60 м²', max: 60, rate: 2700, bar: 65 },
-  { label: 'От 60 м²', max: Infinity, rate: 2500, bar: 45 },
-] as const
+﻿type Price =
+  | { kind: 'fixed'; value: number } // фиксированная сумма за заказ
+  | { kind: 'perM2'; min: number; max: number } // цена за м² (от и до)
+  | { kind: 'custom' } // рассчитывается индивидуально
+
+// Тарифы: цена зависит от общей площади стены (до `max` включительно)
+export const PRICE_TIERS: readonly { label: string; note?: string; max: number; price: Price; bar: number }[] = [
+  { label: 'До 2 м²', note: 'светлые стены', max: 2, price: { kind: 'fixed', value: 16000 }, bar: 100 },
+  { label: '2–5 м²', max: 5, price: { kind: 'perM2', min: 5000, max: 8000 }, bar: 87 },
+  { label: '5–10 м²', max: 10, price: { kind: 'perM2', min: 4500, max: 6000 }, bar: 70 },
+  { label: '10–50 м²', max: 50, price: { kind: 'perM2', min: 4000, max: 5000 }, bar: 55 },
+  { label: 'От 50 м²', max: Infinity, price: { kind: 'custom' }, bar: 35 },
+]
 
 // Скорость печати, м²/ч (быстрый и медленный режим)
 const SPEED_FAST = 6
@@ -17,16 +23,24 @@ export function getTierIndex(area: number) {
   return PRICE_TIERS.findIndex((tier) => area <= tier.max)
 }
 
+// Округляем итог до сотен рублей
+const roundPrice = (n: number) => Math.round(n / 100) * 100
+
 export function calcQuote(width: number, height: number) {
   const area = Math.round(width * height * 100) / 100
   const tierIndex = getTierIndex(area)
-  const rate = PRICE_TIERS[tierIndex].rate
+  const { price } = PRICE_TIERS[tierIndex]
   return {
     area,
     tierIndex,
-    rate,
-    // Округляем итог до сотен рублей
-    total: Math.round((area * rate) / 100) * 100,
+    price,
+    // Итоговая сумма «от» и «до»; null, если расчёт индивидуальный
+    total:
+      price.kind === 'fixed'
+        ? { from: price.value, to: price.value }
+        : price.kind === 'perM2'
+          ? { from: roundPrice(area * price.min), to: roundPrice(area * price.max) }
+          : null,
     hoursMin: area / SPEED_FAST,
     hoursMax: area / SPEED_SLOW,
   }
@@ -38,3 +52,12 @@ export const formatMeters = (n: number) => `${decimal(n)} м`
 export const formatArea = (n: number) => `${decimal(n)} м²`
 export const formatPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`
 export const formatHours = (min: number, max: number) => `${decimal(min)}–${decimal(max)} ч.`
+export const formatPriceRange = (from: number, to: number) =>
+  from === to ? formatPrice(from) : `${from.toLocaleString('ru-RU')} – ${formatPrice(to)}`
+
+export const formatTierPrice = (price: Price) =>
+  price.kind === 'fixed'
+    ? formatPrice(price.value)
+    : price.kind === 'perM2'
+      ? formatPriceRange(price.min, price.max)
+      : 'Индивидуально'

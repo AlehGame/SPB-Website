@@ -6,7 +6,8 @@ import {
   formatArea,
   formatHours,
   formatMeters,
-  formatPrice,
+  formatPriceRange,
+  formatTierPrice,
   HEIGHT_RANGE,
   PRICE_TIERS,
   WIDTH_RANGE,
@@ -27,6 +28,15 @@ export function Calculator() {
   const print = useUploadedImage(setError)
 
   const quote = calcQuote(width, height)
+  const { total, price } = quote
+  const isRange = !total || total.from !== total.to
+  const headline = total ? formatPriceRange(total.from, total.to) : 'Индивидуальный расчет'
+  const details =
+    price.kind === 'fixed'
+      ? 'Минимальный выезд'
+      : price.kind === 'perM2'
+        ? `${formatArea(quote.area)} x ${formatTierPrice(price)}`
+        : formatArea(quote.area)
 
   return (
     <section id="prices" className="flex min-h-svh w-full items-center bg-bg-1 py-22 md:py-section">
@@ -94,11 +104,9 @@ export function Calculator() {
 
             <div className="flex flex-col gap-1 rounded-card bg-black px-4 pt-3 pb-4.25 text-white" aria-live="polite">
               <p className="text-sm leading-6 font-medium">Ориентировочно</p>
-              <p className="text-3xl leading-tight font-bold">{formatPrice(quote.total)}</p>
+              <p className={`${isRange ? 'text-2xl' : 'text-3xl'} leading-tight font-bold`}>{headline}</p>
               <p className="flex flex-wrap items-center gap-x-3 text-xs leading-3.5">
-                <span>
-                  {formatArea(quote.area)} x {formatPrice(quote.rate)}
-                </span>
+                <span>{details}</span>
                 <span aria-hidden>•</span>
                 <span>Печать: {formatHours(quote.hoursMin, quote.hoursMax)}</span>
               </p>
@@ -110,9 +118,12 @@ export function Calculator() {
                   key={tier.label}
                   className={`grid grid-cols-[calc(var(--spacing)*24.25)_1fr_auto] items-center ${i === quote.tierIndex ? 'font-bold' : ''}`}
                 >
-                  <span>{tier.label}</span>
+                  <span>
+                    {tier.label}
+                    {tier.note && <span className="block text-[10px] leading-3 font-normal">{tier.note}</span>}
+                  </span>
                   <span aria-hidden className="h-1 rounded-full bg-black" style={{ width: `${tier.bar}%` }} />
-                  <span className="pl-6">{formatPrice(tier.rate)}</span>
+                  <span className="pl-6">{formatTierPrice(tier.price)}</span>
                 </li>
               ))}
             </ul>

@@ -1,12 +1,13 @@
-import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
-import { HEIGHT_RANGE, WIDTH_RANGE } from '../../lib/pricing'
+﻿import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 
 // Шаг сдвига изображения стрелками, доля свободного места
 const KEY_STEP = 0.05
 
-// Доля области, которую занимает изображение: от 20% (минимум на ползунке) до 100% (максимум)
-const printScale = (value: number, { min, max }: { min: number; max: number }) =>
-  0.2 + (0.8 * (value - min)) / (max - min)
+// Область визуализатора условно показывает стену 10 × 3 м (независимо от диапазона ползунков):
+// изображение занимает ту же долю области, что выбранный размер — от стены. Больше стены — на всю область.
+const REFERENCE_WALL = { width: 10, height: 3 }
+
+const printScale = (value: number, reference: number) => Math.min(1, value / reference)
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value))
 
@@ -35,8 +36,8 @@ export function WallPreview({ width, height, wallUrl, printUrl }: WallPreviewPro
   // Положение слоя: доля свободного места в области (0 — слева/сверху, 1 — справа/снизу)
   const [position, setPosition] = useState({ x: 0.5, y: 0.5 })
 
-  const scaleX = printScale(width, WIDTH_RANGE)
-  const scaleY = printScale(height, HEIGHT_RANGE)
+  const scaleX = printScale(width, REFERENCE_WALL.width)
+  const scaleY = printScale(height, REFERENCE_WALL.height)
   const movable = scaleX < 1 || scaleY < 1
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
