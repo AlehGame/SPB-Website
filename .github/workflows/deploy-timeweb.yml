@@ -1,0 +1,38 @@
+name: Deploy to Timeweb (FTP)
+
+# Включается переменной репозитория TIMEWEB_DEPLOY=true (Settings → Secrets and variables → Actions → Variables).
+# Пока она не задана, workflow пропускается и ничего не ломает. Настройка: TIMEWEB.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: timeweb
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ vars.TIMEWEB_DEPLOY == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          # Адрес сайта для canonical, Open Graph, robots.txt и sitemap.xml, например https://coolprint-spb.ru/
+          VITE_SITE_URL: ${{ vars.SITE_URL }}
+      # Файлы, нужные только Cloudflare, на хостинг не отправляем
+      - run: rm -f dist/wrangler.json dist/.assetsignore
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          # Папка сайта на хостинге, например /coolprint-spb.ru/public_html/ (со слэшем в конце)
+          server-dir: ${{ vars.TIMEWEB_DIR }}

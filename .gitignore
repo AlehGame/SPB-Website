@@ -38,3 +38,6 @@ worker/.dev.vars
 !.dev.vars.example
 .env*
 !.env.example
+
+# сборка для хостинга Timeweb
+timeweb/

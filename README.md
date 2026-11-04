@@ -54,3 +54,7 @@ npm run build    # production-сборка в dist/
 1. Обновите `VITE_SITE_URL` в `.env` и добавьте домен в `ALLOWED_ORIGINS` в [worker/wrangler.toml](worker/wrangler.toml) (затем `npx wrangler deploy`).
 2. Подтвердите сайт в Яндекс Вебмастере и Google Search Console (мета-тег подтверждения добавляется в `<head>` в `index.html`) и отправьте `sitemap.xml`.
 3. `robots.txt` учитывается поисковиками только в корне домена, на `github.io/<репозиторий>/` он не работает.
+
+## Хостинг Timeweb
+
+Пошаговая инструкция по переносу сайта и подготовке домена: [TIMEWEB.md](TIMEWEB.md). Сборка под домен: `.\scripts\build-timeweb.ps1 -Domain ваш-домен.ru`.
