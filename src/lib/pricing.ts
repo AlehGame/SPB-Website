@@ -11,7 +11,7 @@ export const MIN_ORDER = 16000
 export const PRICE_TIERS: readonly { label: string; max: number; price: Price; bar: number | null }[] = [
   { label: 'До 2 м²', max: 2, price: { kind: 'fixed', value: MIN_ORDER }, bar: 138 },
   { label: '2–5 м²', max: 5, price: { kind: 'perM2', min: 5000, max: 8000 }, bar: 118 },
-  { label: '5–10 м²', max: 10, price: { kind: 'perM2', min: 4500, max: 6000 }, bar: 88 },
+  { label: '5–10 м²', max: 10, price: { kind: 'perM2', min: 4500, max: 6500 }, bar: 88 },
   { label: '10–50 м²', max: 50, price: { kind: 'perM2', min: 4000, max: 5000 }, bar: 58 },
   { label: 'От 50 м²', max: Infinity, price: { kind: 'custom' }, bar: null },
 ]
