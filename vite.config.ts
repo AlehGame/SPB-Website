@@ -2,6 +2,8 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 // Адрес сайта задаётся в .env (VITE_SITE_URL): canonical, Open Graph, robots.txt и sitemap.xml берут его отсюда
 const DEFAULT_SITE_URL = 'https://alehgame.github.io/SPB-Website/'
 
@@ -34,6 +36,6 @@ export default defineConfig(({ mode }) => {
   return {
     // Относительные пути, чтобы сайт работал на GitHub Pages в подпапке /<repo>/
     base: './',
-    plugins: [react(), tailwindcss(), seoFiles(siteUrl)],
-  }
+    plugins: [react(), tailwindcss(), seoFiles(siteUrl), cloudflare()],
+  };
 })
