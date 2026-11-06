@@ -5,4 +5,6 @@ compatibility_date = "2025-01-01"
 [vars]
 SANITY_PROJECT_ID = "fy6hrt2t"
 SANITY_DATASET = "production"
+# Заявки хранятся в закрытом датасете (создаётся командой из TIMEWEB.md/README: sanity dataset create private --visibility private)
+SANITY_CONTACT_DATASET = "private"
 ALLOWED_ORIGINS = "https://alehgame.github.io,http://localhost:5173,https://coolprintspb.ru,https://www.coolprintspb.ru"

@@ -65,3 +65,14 @@ pm run build в корне) создаёт файл .wrangler/deploy/config.json
 pm run deploy, 
 pm run tail, 
 pm run dev в worker/ уже так настроены).
+
+## Закрытый датасет для заявок (важно для безопасности)
+
+Датасет `production` в Sanity публичный: сайт читает кейсы и отзывы без токена. Из-за этого **любой документ в нём может прочитать кто угодно** через публичный API, в том числе имена и телефоны из заявок. Поэтому заявки хранятся в отдельном **закрытом** датасете `private`, а Studio разделена на две рабочие области: «Cool Print: сайт» (кейсы, отзывы) и «Cool Print: заявки» (переключатель в левом верхнем углу).
+
+Однократная настройка (порядок важен):
+
+1. В папке `studio/`: `npx.cmd sanity dataset create private --visibility private`.
+2. Задеплойте Worker: в папке `worker/` выполните `npm.cmd run deploy` (переменная `SANITY_CONTACT_DATASET=private` уже в [worker/wrangler.toml](worker/wrangler.toml)).
+3. Задеплойте Studio: в папке `studio/` выполните `npx.cmd sanity deploy`.
+4. Удалите старые заявки из публичного датасета `production`: в Studio их больше не видно, а через API они остаются доступны. Команда в папке `studio/`: `npx.cmd sanity documents query "*[_type == 'contactRequest']._id" --dataset production`, затем удалите найденные документы командой `npx.cmd sanity documents delete <id> --dataset production`.

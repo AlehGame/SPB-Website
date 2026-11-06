@@ -41,7 +41,8 @@ const questions = [
   },
 ]
 
-// Микроразметка FAQPage для расширенных сниппетов в поиске
+// Микроразметка FAQPage для расширенных сниппетов в поиске.
+// «<» экранируется, чтобы текст вопросов не мог закрыть тег <script>.
 const faqJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -50,7 +51,7 @@ const faqJsonLd = JSON.stringify({
     name: question,
     acceptedAnswer: { '@type': 'Answer', text: answer },
   })),
-})
+}).replaceAll('<', '\\u003c')
 
 export function Faqs() {
   // Открыт один вопрос; по умолчанию — первый, как в макете

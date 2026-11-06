@@ -74,6 +74,27 @@ test('sends Telegram and email notifications when configured', async () => {
   assert.ok(urls.some((url) => url === 'https://api.resend.com/emails'))
 })
 
+test('writes requests to the private dataset when configured', async () => {
+  const urls: string[] = []
+  globalThis.fetch = (async (url: string) => {
+    urls.push(url)
+    return new Response(JSON.stringify({ document: { _id: 'image-abc' } }), { status: 200 })
+  }) as typeof fetch
+
+  const response = await worker.fetch(
+    (() => {
+      const body = new FormData()
+      body.append('document', JSON.stringify(valid))
+      body.append('wallPhoto', new File([new Uint8Array([1])], 'wall.png', { type: 'image/png' }))
+      return new Request('https://worker.example', { method: 'POST', body, headers: { Origin: ORIGIN } })
+    })(),
+    { ...env, SANITY_CONTACT_DATASET: 'private' },
+  )
+  assert.equal(response.status, 200)
+  assert.ok(urls.every((url) => url.includes('/private')))
+  assert.equal(urls.length, 2)
+})
+
 test('rejects invalid data without calling Sanity', async () => {
   globalThis.fetch = (async () => assert.fail('must not call Sanity')) as typeof fetch
   for (const bad of [
@@ -96,6 +117,27 @@ test('rejects foreign origins and handles preflight', async () => {
   )
   assert.equal(preflight.status, 204)
   assert.equal(preflight.headers.get('Access-Control-Allow-Origin'), ORIGIN)
+})
+
+test('rejects oversized and malformed requests without calling Sanity', async () => {
+  globalThis.fetch = (async () => assert.fail('must not call Sanity')) as typeof fetch
+  const huge = await worker.fetch(
+    new Request('https://worker.example', {
+      method: 'POST',
+      body: new FormData(),
+      headers: { Origin: ORIGIN, 'Content-Length': String(50 * 1024 * 1024) },
+    }),
+    env,
+  )
+  assert.equal(huge.status, 413)
+
+  const body = new FormData()
+  body.append('document', '{not json')
+  const malformed = await worker.fetch(
+    new Request('https://worker.example', { method: 'POST', body, headers: { Origin: ORIGIN } }),
+    env,
+  )
+  assert.equal(malformed.status, 400)
 })
 
 test('returns 500 when Sanity fails', async () => {

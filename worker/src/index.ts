@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Cloudflare Worker: принимает заявку с формы сайта и сохраняет её в Sanity.
  *
  * Токен записи Sanity хранится только здесь (секрет SANITY_WRITE_TOKEN), в браузер он не попадает.
@@ -12,6 +12,8 @@
 export interface Env {
   SANITY_PROJECT_ID: string
   SANITY_DATASET: string
+  /** Закрытый датасет для заявок. Основной датасет публичный, в нём заявки (имена, телефоны) мог бы прочитать кто угодно */
+  SANITY_CONTACT_DATASET?: string
   SANITY_WRITE_TOKEN: string
   /** Адреса сайта через запятую; запросы с других адресов отклоняются */
   ALLOWED_ORIGINS: string
@@ -26,6 +28,8 @@ const BUILDING_TYPES = ['Школа', 'Школа искусств', 'Детск
 const PHOTO_TYPES = ['image/png', 'image/jpeg', 'image/webp']
 const MAX_PHOTO_SIZE = 10 * 1024 * 1024
 const MAX_TASK_LENGTH = 2000
+// Тело запроса: фото + небольшой JSON; больше не читаем, чтобы не тратить память Worker на мусорные запросы
+const MAX_BODY_SIZE = MAX_PHOTO_SIZE + 512 * 1024
 
 interface ContactPayload {
   name: string
@@ -135,10 +139,20 @@ export default {
       return json({ error: 'Сервис не настроен' }, 500, cors)
     }
 
+    if (Number(request.headers.get('Content-Length') ?? 0) > MAX_BODY_SIZE) {
+      return json({ error: 'Слишком большой запрос' }, 413, cors)
+    }
+
     try {
       const form = await request.formData()
       const rawDocument = form.get('document')
-      const payload = parsePayload(typeof rawDocument === 'string' ? JSON.parse(rawDocument) : null)
+      let parsed: unknown = null
+      try {
+        parsed = typeof rawDocument === 'string' ? JSON.parse(rawDocument) : null
+      } catch {
+        return json({ error: 'Некорректные данные' }, 400, cors)
+      }
+      const payload = parsePayload(parsed)
       if (typeof payload === 'string') return json({ error: payload }, 400, cors)
 
       const photo = form.get('wallPhoto')
@@ -147,18 +161,19 @@ export default {
         return json({ error: 'Фото: png, jpeg или webp до 10 МБ' }, 400, cors)
       }
 
+      const dataset = env.SANITY_CONTACT_DATASET || env.SANITY_DATASET
       let wallPhoto: unknown
       if (file) {
         const { document } = await sanityFetch(
           env,
-          `/assets/images/${env.SANITY_DATASET}?filename=${encodeURIComponent(file.name || 'wall-photo')}`,
+          `/assets/images/${dataset}?filename=${encodeURIComponent((file.name || 'wall-photo').slice(0, 100))}`,
           { method: 'POST', headers: { 'Content-Type': file.type }, body: await file.arrayBuffer() },
         )
         wallPhoto = { _type: 'image', asset: { _type: 'reference', _ref: document?._id } }
       }
 
       // visibility=async: не ждём индексации документа, ответ приходит быстрее
-      await sanityFetch(env, `/data/mutate/${env.SANITY_DATASET}?visibility=async`, {
+      await sanityFetch(env, `/data/mutate/${dataset}?visibility=async`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -41,3 +41,8 @@ worker/.dev.vars
 
 # сборка для хостинга Timeweb
 timeweb/
+
+# системный мусор
+._*
+.DS_Store
+Thumbs.db
