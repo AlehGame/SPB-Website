@@ -1,4 +1,4 @@
-# Перенос сайта на хостинг Timeweb
+﻿# Перенос сайта на хостинг Timeweb
 
 Сайт — набор статических файлов, серверная часть не нужна. Форма заявок работает через Cloudflare Worker, кейсы и отзывы
 берутся из Sanity, поэтому на Timeweb переезжают только готовые файлы сайта.
@@ -47,7 +47,7 @@ npm.cmd ci
 
 1. **Форма (Cloudflare Worker).** В `worker/wrangler.toml` добавьте домен в `ALLOWED_ORIGINS` через запятую, например
    `https://alehgame.github.io,http://localhost:5173,https://coolprint-spb.ru,https://www.coolprint-spb.ru`, затем в папке
-   `worker/` выполните `npx.cmd wrangler deploy`.
+   `worker/` выполните `npm.cmd run deploy` (именно так, а не `npx wrangler deploy`: иначе wrangler может взять конфиг сайта из корня проекта).
 2. **Sanity (кейсы и отзывы).** sanity.io/manage → проект → API → CORS origins: добавьте `https://coolprint-spb.ru` и
    `https://www.coolprint-spb.ru`.
 3. Если хотите, чтобы GitHub Pages и локальная сборка тоже использовали новый адрес, поменяйте `VITE_SITE_URL` в `.env`.

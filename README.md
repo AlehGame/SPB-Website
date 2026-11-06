@@ -35,12 +35,12 @@ npm run build    # production-сборка в dist/
 
 1. **Токен Sanity.** sanity.io/manage → проект → API → Tokens → Add API token, права **Editor**. Скопируйте токен (он показывается один раз).
 2. **Cloudflare.** Бесплатный аккаунт на cloudflare.com. Из папки `worker/`: `npm install`, `npx wrangler login`.
-3. **Секрет.** `npx wrangler secret put SANITY_WRITE_TOKEN` и вставьте токен.
-4. **Деплой.** `npx wrangler deploy`. В конце будет адрес вида `https://coolprint-contact.<аккаунт>.workers.dev`.
+3. **Секрет.** `npx wrangler secret put SANITY_WRITE_TOKEN --config wrangler.toml` и вставьте токен.
+4. **Деплой.** `npm run deploy` (внутри `wrangler deploy --config wrangler.toml`). В конце будет адрес вида `https://coolprint-contact.<аккаунт>.workers.dev`.
 5. **Сайт.** Впишите этот адрес в [.env](.env): `VITE_CONTACT_ENDPOINT=https://coolprint-contact.<аккаунт>.workers.dev`, закоммитьте и запушьте. Сайт пересоберётся.
 6. **Studio.** Из папки `studio/`: `npx sanity deploy`, чтобы в ней появилось поле «Обработана».
 
-Письмо на почту (необязательно): зарегистрируйтесь на resend.com, создайте API key и выполните в `worker/`: `npx wrangler secret put RESEND_API_KEY` и `npx wrangler secret put NOTIFY_EMAIL` (почта, на которую зарегистрирован Resend), затем снова `npx wrangler deploy`. Письма идут с адреса onboarding@resend.dev; для своего домена его нужно подтвердить в Resend.
+Письмо на почту (необязательно): зарегистрируйтесь на resend.com, создайте API key и выполните в `worker/`: `npx wrangler secret put RESEND_API_KEY --config wrangler.toml` и `npx wrangler secret put NOTIFY_EMAIL --config wrangler.toml` (почта, на которую зарегистрирован Resend), затем снова `npm run deploy`. Письма идут с адреса onboarding@resend.dev; для своего домена его нужно подтвердить в Resend.
 
 Уведомление в Telegram (необязательно): в Telegram напишите @BotFather, команда `/newbot`, получите токен бота. Затем откройте чат с новым ботом и нажмите Start (для группы добавьте бота в группу и напишите там любое сообщение). Узнайте chat id: откройте `https://api.telegram.org/bot<токен>/getUpdates` и найдите `"chat":{"id":...}`. В `worker/` выполните `npx wrangler secret put TELEGRAM_BOT_TOKEN` и `npx wrangler secret put TELEGRAM_CHAT_ID`, затем `npx wrangler deploy`. Фото стены приходит в Telegram вместе с текстом заявки.
 
@@ -51,10 +51,17 @@ npm run build    # production-сборка в dist/
 Адрес сайта задаётся в `.env`: `VITE_SITE_URL` (со слэшем в конце). Из него берутся canonical, Open Graph, `robots.txt` и `sitemap.xml` (генерируются при сборке, см. [vite.config.ts](vite.config.ts)). Мета-теги и микроразметка LocalBusiness лежат в [index.html](index.html), FAQPage строится из вопросов в секции «Частые вопросы».
 
 Когда у сайта появится свой домен:
-1. Обновите `VITE_SITE_URL` в `.env` и добавьте домен в `ALLOWED_ORIGINS` в [worker/wrangler.toml](worker/wrangler.toml) (затем `npx wrangler deploy`).
+1. Обновите `VITE_SITE_URL` в `.env` и добавьте домен в `ALLOWED_ORIGINS` в [worker/wrangler.toml](worker/wrangler.toml) (затем `npm run deploy` в папке `worker/`).
 2. Подтвердите сайт в Яндекс Вебмастере и Google Search Console (мета-тег подтверждения добавляется в `<head>` в `index.html`) и отправьте `sitemap.xml`.
 3. `robots.txt` учитывается поисковиками только в корне домена, на `github.io/<репозиторий>/` он не работает.
 
 ## Хостинг Timeweb
 
 Пошаговая инструкция по переносу сайта и подготовке домена: [TIMEWEB.md](TIMEWEB.md). Сборка под домен: `.\scripts\build-timeweb.ps1 -Domain ваш-домен.ru`.
+
+
+> **Важно: команды wrangler для формы.** Сборка сайта (
+pm run build в корне) создаёт файл .wrangler/deploy/config.json, из-за которого wrangler в папке worker/ может взять конфиг сайта (корневой wrangler.jsonc) вместо конфига формы и задеплоить не то. Поэтому все команды для Worker запускайте с `--config wrangler.toml` (скрипты 
+pm run deploy, 
+pm run tail, 
+pm run dev в worker/ уже так настроены).
